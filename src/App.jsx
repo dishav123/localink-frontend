@@ -13,7 +13,7 @@ import Services from "./pages/Services";
 export default function App() {
   return (
     
-    <div className="mx-4 sm:mx-[10%]">
+    <div className="mx-5 sm:mx-[8%]">
       <Navbar/>
       <Routes>
         <Route path='/' element={<Home/>} />

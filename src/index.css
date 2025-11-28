@@ -1,5 +1,17 @@
 @import "tailwindcss";
 
-.active hr{
-    @apply block
+
+.active li {
+    @apply text-[#F3752B];
 }
+
+.active hr {
+    @apply scale-x-100;
+}
+
+
+body {
+  font-family: 'Outfit', sans-serif;
+}
+
+
