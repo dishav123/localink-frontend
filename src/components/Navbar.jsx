@@ -48,7 +48,7 @@ function Navbar() {
                     to="/about"
                     className={({ isActive }) => isActive ? "active group" : "group"}
                 >
-                    <li className="py-1 hover:text-gray-600 transition-colors duration-200">ABOUT</li>
+                    <li className="py-1 hover:text-gray-600 transition-colors duration-200">ABOUT US</li>
                     <hr className="border-none outline-none h-[3px] w-3/5 m-auto bg-[#F3752B] scale-x-0 group-hover:scale-x-100 transition-transform duration-300 rounded" />
                 </NavLink>
 
