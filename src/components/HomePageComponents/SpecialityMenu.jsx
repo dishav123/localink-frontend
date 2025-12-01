@@ -1,5 +1,5 @@
 import { Link } from "react-router";
-import { specialityData } from "../assets/assets";
+import { specialityData } from "../../assets/assets";
 
 function SpecialityMenu() {
     return ( 

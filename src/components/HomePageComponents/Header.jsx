@@ -1,11 +1,11 @@
-import { assets } from "../assets/assets";
+import { assets } from "../../assets/assets";
 
 function Header() {
     return ( 
         <div className="relative flex flex-col md:flex-row flex-wrap bg-[#e36e2a] mt-4 rounded-lg px-6 md:px-10 lg:px-20">
 
             {/* Decorative Rectangle */}
-            <div className="absolute top-0 left-10 w-24 h-10 rounded-b-lg bg-white"></div>
+            {/* <div className="absolute bottom-0 left-0 w-28 h-12 rounded-tr-lg bg-white"></div> */}
             
 
 
@@ -35,7 +35,7 @@ function Header() {
             {/* RightSide */}
             <div className="md:w-1/2 relative">
                 <img
-                    className="w-full max-w-[620px] md:w-[420px] md:absolute md:bottom-0 md:right-2.5 h-auto rounded-lg object-cover"
+                    className="w-full max-w-[620px] md:w-[420px] sm:[120px] md:absolute md:bottom-0 md:right-2.5 h-auto rounded-lg object-cover"
                     src={assets.headerImage2}
                     alt="header visual"
                 />

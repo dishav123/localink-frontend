@@ -1,7 +1,9 @@
-import Header from '../components/Header'
-import ReviewSection from '../components/ReviewSection';
-import SpecialityMenu from '../components/SpecialityMenu';
-import TopServiceProvider from '../components/TopServiceProvider';
+import Banner from '../components/HomePageComponents/Banner';
+import Header from '../components/HomePageComponents/Header'
+import MapSection from '../components/HomePageComponents/MapSection';
+import ReviewSection from '../components/HomePageComponents/ReviewSection';
+import SpecialityMenu from '../components/HomePageComponents/SpecialityMenu';
+import TopServiceProvider from '../components/HomePageComponents/TopServiceProvider';
 
 function Home() {
     return ( 
@@ -9,7 +11,9 @@ function Home() {
             <Header/>
             <SpecialityMenu/>
             <TopServiceProvider/>
-            {/* <ReviewSection/> */}
+            <Banner/>
+            <MapSection/>
+            <ReviewSection/>
         </div>
      );
 }

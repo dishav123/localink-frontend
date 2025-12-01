@@ -13,7 +13,8 @@ import CarpenterSpec1 from './CarpenterSpec1.svg'
 import PlumberSpec1 from './PlumberSpec1.svg'
 import Person from './ServiceProviderImage/Person.png'
 import Person1 from './ServiceProviderImage/Person1.png'
-
+import BannerImage from './ServiceProviderImage/BannerImage1.png'
+import MapClone from './MapClone.jpg'
 
 export const assets={
     logo,
@@ -22,7 +23,9 @@ export const assets={
     group_profiles,
     arrowIcon,
     headerImage,
-    headerImage2
+    headerImage2,
+    BannerImage,
+    MapClone
 }
 
 

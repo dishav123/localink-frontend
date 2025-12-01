@@ -1,4 +1,4 @@
-import svgPaths from "../assets/star";
+import svgPaths from "../../assets/star";
 
 function StarIcon() {
   return (

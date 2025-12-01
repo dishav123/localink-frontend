@@ -1,8 +1,7 @@
 import { useNavigate } from "react-router";
-
-import ServiceCard from "../MiniComponents/ServiceCard";
+import ServiceCard from "../../MiniComponents/ServiceCard";
 import { useContext } from "react";
-import { AppContext } from "../context/AppContext";
+import { AppContext } from "../../context/AppContext";
 
 function TopServiceProvider() {
     const navigate=useNavigate();

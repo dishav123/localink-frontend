@@ -9,10 +9,10 @@ import About from "./pages/About";
 import Navbar from "./components/Navbar";
 import Appointment from "./pages/Appointment"
 import Services from "./pages/Services";
+import Footer from "./components/Footer";
 
 export default function App() {
   return (
-    
     <div className="mx-5 sm:mx-[8%]">
       <Navbar/>
       <Routes>
@@ -27,6 +27,7 @@ export default function App() {
         <Route path='/my-appointments' element={<MyAppointments/>} />
         <Route path='/appointment/:povId' element={<Appointment/>} />
       </Routes>
+      <Footer/>
     </div>
   );
 }
