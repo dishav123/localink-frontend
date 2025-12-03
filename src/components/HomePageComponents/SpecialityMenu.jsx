@@ -12,7 +12,7 @@ function SpecialityMenu() {
             <div className="flex sm:justify-center gap-6 pt-5 w-full overflow-scroll ">
                 {specialityData.map((items, index) => {
                     return (
-                        <Link className="flex flex-col items-center text-xs cursor-pointer shrink-0 hover:translate-y-[-10px] transition-all duration-500" key={index} to={`/servicerproviders/${items.speciality}`}>
+                        <Link className="flex flex-col items-center text-xs cursor-pointer shrink-0 hover:translate-y-[-10px] transition-all duration-500" key={index} to={`/serviceproviders/${items.speciality}`}>
                             <img className='w-16 sm:w-24 mb-2' src={items.image} alt={items.speciality} />
                             <p>{items.speciality}</p>
                         </Link>

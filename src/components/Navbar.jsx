@@ -33,7 +33,7 @@ function Navbar() {
                     </NavLink>
 
                     <NavLink 
-                        to="/servicerproviders"
+                        to="/serviceproviders"
                         className={({ isActive }) => isActive ? "active group" : "group"}
                     >
                         <li className="py-1 hover:text-gray-600 transition-colors duration-200">SERVICE PROVIDERS</li>

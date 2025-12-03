@@ -17,8 +17,8 @@ export default function App() {
       <Navbar/>
       <Routes>
         <Route path='/' element={<Home/>} />
-        <Route path='/servicerproviders' element={<ServiceProviders/>} />
-        <Route path='/servicerproviders/:speciality' element={<ServiceProviders/>} />
+        <Route path='/serviceproviders' element={<ServiceProviders/>} />
+        <Route path='/serviceproviders/:speciality' element={<ServiceProviders/>} />
         <Route path='services' element={<Services/>} />
         <Route path='/login' element={<Login/>} />
         <Route path='/about' element={<About/>} />
