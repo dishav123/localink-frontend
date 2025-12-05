@@ -10,6 +10,7 @@ import Navbar from "./components/Navbar";
 import Appointment from "./pages/Appointment"
 import Services from "./pages/Services";
 import Footer from "./components/Footer";
+import FeaturedServices from "./pages/FeaturedServices";
 
 export default function App() {
   return (
@@ -19,7 +20,8 @@ export default function App() {
         <Route path='/' element={<Home/>} />
         <Route path='/serviceproviders' element={<ServiceProviders/>} />
         <Route path='/serviceproviders/:speciality' element={<ServiceProviders/>} />
-        <Route path='services' element={<Services/>} />
+        <Route path='/services' element={<Services/>} />
+        <Route path='/services/:serviceid' element={<FeaturedServices/>} />
         <Route path='/login' element={<Login/>} />
         <Route path='/about' element={<About/>} />
         <Route path='/contact' element={<Contact/>} />

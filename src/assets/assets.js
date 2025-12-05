@@ -15,6 +15,18 @@ import Person from './ServiceProviderImage/Person.png'
 import Person1 from './ServiceProviderImage/Person1.png'
 import BannerImage from './ServiceProviderImage/BannerImage1.png'
 import MapClone from './MapClone.jpg'
+import Cleaning from './Cleaning.jpeg'
+import exampleImage from './example.jpg'
+import TechnicianService from './ServiceProviderImage/TechnicianRepairing.png'
+import TankCleaning from './ServiceProviderImage/TankCleaning.png'
+import CarpenterService from './ServiceProviderImage/CarpenterService.png'
+import ElectricianService from './ServiceProviderImage/ElectricianService.png'
+import ACRepairService from './ServiceProviderImage/ACRepairServices.png'
+import PlumbingService from './ServiceProviderImage/PlumbingServices.png'
+import HouseCleanService from './ServiceProviderImage/HouseCleanServices.png'
+import LaptopRepairService from './ServiceProviderImage/LaptopRepairServices.png'
+import PaintingService from './ServiceProviderImage/PaintingService.png'
+import KitchenHoodCleaning from './ServiceProviderImage/KitchenHoodCleaning.png'
 
 export const assets={
     logo,
@@ -25,7 +37,19 @@ export const assets={
     headerImage,
     headerImage2,
     BannerImage,
-    MapClone
+    MapClone,
+    Cleaning,
+    exampleImage,
+    TechnicianService,
+    TankCleaning,
+    CarpenterService,
+    ElectricianService,
+    ACRepairService,
+    PlumbingService,
+    HouseCleanService,
+    LaptopRepairService,
+    PaintingService,
+    KitchenHoodCleaning
 }
 
 
@@ -51,7 +75,7 @@ export const specialityData = [
         image: HouseCleanerSpec
     },
     {
-        speciality: 'Techinician',
+        speciality: 'Technician',
         image: TechnicianSpec1
     },
 ]
@@ -200,3 +224,107 @@ export const serviceProviders = [
         }
     }
 ];
+
+export const featuredServices = [
+    {
+        id: 'fs1',
+        serviceTitle: "Hire a Technician",
+        providerName: "Ramesh Khadka",
+        description: "Experienced technician skilled in repairing home appliances with quick diagnostic service.",
+        cost: 1800,
+        review: 4.8,
+        category: "Technician",
+        image: TechnicianService
+    },
+    {
+        id: 'fs2',
+        serviceTitle: "Water Tank Cleaning",
+        providerName: "Sita Cleaning Services",
+        description: "Professional tank cleaning using safe tools and hygienic methods for clean water.",
+        cost: 1500,
+        review: 4.6,
+        category: "Cleaning",
+        image: TankCleaning
+    },
+    {
+        id: 'fs3',
+        serviceTitle: "Carpenter On-Demand",
+        providerName: "Bikash Shrestha",
+        description: "Specialist in furniture repair, door adjustments, and custom wooden designs.",
+        cost: 1200,
+        review: 4.7,
+        category: "Carpenter",
+        image: CarpenterService
+    },
+    {
+        id: 'fs4',
+        serviceTitle: "Electricity Checkup",
+        providerName: "Mina Thapa",
+        description: "Licensed electrician for wiring inspection, light installation, and emergency fixes.",
+        cost: 900,
+        review: 4.9,
+        category: "Electrician",
+        image: ElectricianService
+    },
+    {
+        id: 'fs5',
+        serviceTitle: "House Deep Cleaning",
+        providerName: "Hari Chaudhary",
+        description: "Comprehensive cleaning including bathroom, kitchen, windows, and floor sanitizing.",
+        cost: 3500,
+        review: 4.5,
+        category: "Cleaning",
+        image: HouseCleanService
+    },
+    {
+        id: 'fs6',
+        serviceTitle: "AC Maintenance",
+        providerName: "Kamal Tamang",
+        description: "AC servicing, cooling check, gas refill, and filter cleaning for better performance.",
+        cost: 2500,
+        review: 4.7,
+        category: "Technician",
+        image: ACRepairService
+    },
+    {
+        id: 'fs7',
+        serviceTitle: "Plumbing & Leakage Fix",
+        providerName: "Nabin Lama",
+        description: "Reliable solution for leakage problems, tap replacements, and pipe repairs.",
+        cost: 1100,
+        review: 4.6,
+        category: "Plumbing",
+        image: PlumbingService
+    },
+    {
+        id: 'fs8',
+        serviceTitle: "Laptop Repair Service",
+        providerName: "Aayush KC",
+        description: "Laptop repair including part replacement, OS installation, and performance optimization.",
+        cost: 2000,
+        review: 4.8,
+        category: "Electronics",
+        image: LaptopRepairService
+    },
+    {
+        id: 'fs9',
+        serviceTitle: "Painting & Wall Coating",
+        providerName: "Sandhya Balami",
+        description: "Interior and exterior wall painting with smooth finishing and premium paint quality.",
+        cost: 5000,
+        review: 4.5,
+        category: "Painting",
+        image: PaintingService
+    },
+    {
+        id: 'fs10',
+        serviceTitle: "Kitchen Hood Cleaning",
+        providerName: "Dipendra Shah",
+        description: "Deep cleaning of chimney and kitchen hood to remove grease and improve ventilation.",
+        cost: 1600,
+        review: 4.7,
+        category: "Cleaning",
+        image: KitchenHoodCleaning
+    }
+];
+
