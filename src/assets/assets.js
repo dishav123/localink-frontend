@@ -27,6 +27,9 @@ import HouseCleanService from './ServiceProviderImage/HouseCleanServices.png'
 import LaptopRepairService from './ServiceProviderImage/LaptopRepairServices.png'
 import PaintingService from './ServiceProviderImage/PaintingService.png'
 import KitchenHoodCleaning from './ServiceProviderImage/KitchenHoodCleaning.png'
+import verifiedIcon from './Icons/verified_icon.svg'
+import InfoIcon from './Icons/info_icon.svg'
+import LocationPinIcon from './Icons/LocationPin.svg'
 
 export const assets={
     logo,
@@ -49,7 +52,10 @@ export const assets={
     HouseCleanService,
     LaptopRepairService,
     PaintingService,
-    KitchenHoodCleaning
+    KitchenHoodCleaning,
+    verifiedIcon,
+    InfoIcon,
+    LocationPinIcon
 }
 
 
@@ -128,9 +134,10 @@ export const serviceProviders = [
         name: 'Nirmala Lama',
         image:Person1,
         speciality: 'House Cleaner',
+        masterIn: 'Bathroom Sanitization',
         experience: '4 Years',
         description:
-            'Professional house cleaner specializing in deep cleaning, bathroom sanitization, and kitchen grease removal. Has worked with multiple apartments and homestays in Lalitpur. Clients appreciate her punctuality, honesty, and thorough work.',
+            'Professional house cleaner specializing in deep cleaning, bathroom sanitization, and kitchen grease removal. Has worked with multiple apartments and homestays in Lalitpur. Clients appreciate her punctuality, honesty, and thorough work. lorem ipsum dolor sit amet, consectetur adipiscing elit lore lorem ipsum dolor sit amet, consectetur adipiscing elit lorem ipsum dolor sit amet, consectetur adipiscing elit lorrem ipsum dolor sit amet, consectetur adipiscing elit lorem ipsum dolor sit amet, consectetur adipiscing elit lorem ipsum dolor sit amet, consectetur adipiscing elit',
         fees: 1200,
         address: {
             line1: 'Jawalakhel, Lalitpur',
