@@ -2,9 +2,15 @@ import { useNavigate } from "react-router";
 
 function ServiceCard({ image, name, speciality, status,id }) {
     const navigate=useNavigate();
+    
+    const handleCardClick = () => {
+        window.scrollTo(0, 0);
+        navigate(`/appointment/${id}`);
+    }
+    
     return (
         
-        <div  onClick={()=>navigate(`/appointment/${id}`)} className="w-full border border-blue-200 rounded-xl overflow-hidden cursor-pointer hover:-translate-y-2 transition-all duration-500">
+        <div  onClick={handleCardClick} className="w-full border border-blue-200 rounded-xl overflow-hidden cursor-pointer hover:-translate-y-2 transition-all duration-500">
             <div className="w-full bg-blue-100 flex justify-center items-center">
                 <img 
                     src={image} 

@@ -29,7 +29,7 @@ export default function App() {
         <Route path='/my-appointments' element={<MyAppointments/>} />
         <Route path='/appointment/:povId' element={<Appointment/>} />
       </Routes>
-      <Footer/>
+      <Footer />
     </div>
   );
 }
