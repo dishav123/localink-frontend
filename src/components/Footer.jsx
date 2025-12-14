@@ -3,7 +3,7 @@ import { assets } from "../assets/assets";
 function Footer() {
     return ( 
         <div className="md:mx-6">
-            <div className="flex flex-col sm:grid grid-cols-[3fr_1fr_1fr] gap-14 my-10 mt-40 text-sm">
+            <div className="flex flex-col sm:grid grid-cols-[3fr_1fr_1fr] gap-14 my-10 mt-20 text-sm">
                 {/* left Section */}
                 <div>
                     <img className="w-25 mb-5" src={assets.logo} alt="" />
@@ -35,7 +35,7 @@ function Footer() {
             </div>
             {/* Copyright Text */}
                 <div>
-                    <hr className="rounded-full border-t border-gray-600 "/>
+                    <hr className="rounded-full border-t border-gray-500 "/>
                     <p className="py-5 text-sm text-center">Copyright 2024@ Localink - All Right Reserved.</p>
                 </div>
         </div>

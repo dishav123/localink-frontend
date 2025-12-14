@@ -30,6 +30,8 @@ import KitchenHoodCleaning from "./ServiceProviderImage/KitchenHoodCleaning.png"
 import verifiedIcon from "./Icons/verified_icon.svg";
 import InfoIcon from "./Icons/info_icon.svg";
 import LocationPinIcon from "./Icons/LocationPin.svg";
+import AboutPageImage from "./ServiceProviderImage/AboutPageImage.jpg";
+import AboutPage2 from "./ServiceProviderImage/AboutPage2.jpg";
 
 export const assets = {
   logo,
@@ -56,6 +58,7 @@ export const assets = {
   verifiedIcon,
   InfoIcon,
   LocationPinIcon,
+  AboutPage2,
 };
 
 export const specialityData = [
