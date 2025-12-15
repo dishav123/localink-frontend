@@ -26,7 +26,6 @@ function About() {
         </div>
       </div>
 
-      {/* Stats Section */}
       <div className="grid grid-cols-2 md:grid-cols-4 gap-6 mt-6 px-6 py-8 bg-[#e36e2a] rounded-2xl text-white text-center">
         <div>
           <p className="text-3xl md:text-4xl font-semibold">95%</p>
@@ -54,7 +53,6 @@ function About() {
         </div>
       </div>
 
-      {/* Goals Section */}
       <div className="flex flex-col gap-8 mt-12 px-2 md:px-4 py-6">
         <div className="flex flex-col md:flex-row gap-6">
           <div className="w-full md:w-1/2 text-2xl md:text-4xl font-medium">
