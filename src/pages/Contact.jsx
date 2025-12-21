@@ -62,7 +62,7 @@ function Contact() {
             Drop us an email and we’ll get back to you soon.
           </p>
           <p className="font-semibold text-[#e36e2a]">
-            info@localink.com
+            localinkinfoservice@gmail.com
           </p>
         </div>
 

@@ -35,6 +35,9 @@ import Email_icon from "./Icons/EmailC.svg";
 import Phone_icon from "./Icons/PhoneC.svg";
 import Home_icon from "./Icons/HomeC1.svg";
 import ContactHero from "./ContactHero.jpg";
+import MailIcon from './Icons/MailIcon.svg';
+import PhoneIcon from './Icons/PhoneIcon.svg'
+import BackArrow from './Icons/BackArrow.svg'
 
 export const assets = {
   logo,
@@ -65,7 +68,10 @@ export const assets = {
   Email_icon,
   Phone_icon,
   Home_icon,
-  ContactHero
+  ContactHero,
+  MailIcon,
+  PhoneIcon,
+  BackArrow
 };
 
 export const specialityData = [
