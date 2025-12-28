@@ -3,6 +3,7 @@ import { useParams } from "react-router";
 import { AppContext } from "../context/AppContext";
 import { assets } from "../assets/assets";
 import RelatedSP from "../components/AppointmentPageComponent/RelatedSP";
+import BookingSlots from "../components/BookingComponent/BookingSlots.jsx";
 
 function MyAppointment() {
   const { povId } = useParams();
@@ -15,55 +16,54 @@ function MyAppointment() {
   const [slotIndex, setSlotIndex] = useState(0);
   const [slotTime, setSlotTime] = useState("");
 
- const getAvailableSlots = async () => {
-  setSpSlots([]);
+  const getAvailableSlots = async () => {
+    setSpSlots([]);
 
-  let today = new Date();
-  let startIndex = 0;
+    let today = new Date();
+    let startIndex = 0;
 
-  if (today.getHours() >= 21) {
-    startIndex = 1;
-  }
-
-  for (let i = startIndex; i < startIndex + 7; i++) {
-    let currentDate = new Date(today);
-    currentDate.setDate(today.getDate() + i);
-
-    let endDateTime = new Date(today);
-    endDateTime.setDate(today.getDate() + i);
-    endDateTime.setHours(18, 0, 0, 0);
-
-    // Set start time
-    if (today.getDate()===currentDate.getDate()) {
-      // Only for today
-      currentDate.setHours(
-        currentDate.getHours() > 8 ? currentDate.getHours() + 1 : 8
-      );
-      currentDate.setMinutes(currentDate.getMinutes() > 30 ? 30 : 0);
-    } else {
-      currentDate.setHours(8, 0, 0, 0);
+    if (today.getHours() >= 21) {
+      startIndex = 1;
     }
 
-    let timeSlots = [];
+    for (let i = startIndex; i < startIndex + 7; i++) {
+      let currentDate = new Date(today);
+      currentDate.setDate(today.getDate() + i);
 
-    while (currentDate < endDateTime) {
-      let formattedTime = currentDate.toLocaleTimeString([], {
-        hour: "2-digit",
-        minute: "2-digit",
-      });
+      let endDateTime = new Date(today);
+      endDateTime.setDate(today.getDate() + i);
+      endDateTime.setHours(18, 0, 0, 0);
 
-      timeSlots.push({
-        datetime: new Date(currentDate),
-        time: formattedTime,
-      });
+      // Set start time
+      if (today.getDate() === currentDate.getDate()) {
+        // Only for today
+        currentDate.setHours(
+          currentDate.getHours() > 8 ? currentDate.getHours() + 1 : 8
+        );
+        currentDate.setMinutes(currentDate.getMinutes() > 30 ? 30 : 0);
+      } else {
+        currentDate.setHours(8, 0, 0, 0);
+      }
 
-      currentDate.setMinutes(currentDate.getMinutes() + 30);
+      let timeSlots = [];
+
+      while (currentDate < endDateTime) {
+        let formattedTime = currentDate.toLocaleTimeString([], {
+          hour: "2-digit",
+          minute: "2-digit",
+        });
+
+        timeSlots.push({
+          datetime: new Date(currentDate),
+          time: formattedTime,
+        });
+
+        currentDate.setMinutes(currentDate.getMinutes() + 30);
+      }
+
+      setSpSlots((prev) => [...prev, timeSlots]);
     }
-
-    setSpSlots((prev) => [...prev, timeSlots]);
-  }
-};
-
+  };
 
   useEffect(() => {
     const spInfo = serviceProviders.find((sp) => sp._id === povId);
@@ -155,38 +155,20 @@ function MyAppointment() {
       </div>
 
       {/* Booking Slots */}
-      <div className="sm:ml-80 sm:pl-4 mt-4 font-medium text-gray-600">
-        <p>Booking Slots</p>
-        <div className="flex gap-3 items-center w-full overflow-x-scroll mt-4">
-          {
-            spSlots.length && spSlots.map((items,index)=>{
-              return(
-                <div onClick={()=>setSlotIndex(index)} className={`text-center py-6 min-w-16 rounded-full cursor-pointer ${slotIndex === index ? 'bg-[#e36e2a] text-white':'border border-gray-200'}`} key={index}>
-                  <p>{items[0] && dayOfWeek[items[0].datetime.getDay()]}</p>
-                  <p>{items[0] && items[0].datetime.getDate()}</p>
-                </div>
-              )
-            })
-          }
-        </div>
+      <div className="sm:ml-80 sm:pl-4 mt-4">
+        <BookingSlots
+          onSlotSelect={(slot) => {
+            console.log("Selected Slot:", slot);
+          }}
+        />
 
-        <div className="flex items-center gap-3 w-full overflow-x-scroll mt-4">
-          {
-            spSlots.length && spSlots[slotIndex].map((item,index)=>{
-              console.log(item)
-              return(
-                <p key={index} onClick={()=>setSlotTime(item.time)} className={`text-sm font-light shrink-0 px-5 py-2 rounded-full cursor-pointer  ${item.time===slotTime?'bg-[#e36e2a] text-white':'border border-gray-200 '} `} >{item.time}</p>
-              )
-            })
-          }
-          
-        </div>
-
-        <button className="bg-[#e36e2a] text-white text-sm font-light px-14 py-3 rounded-full my-6 hover:bg-[#c35d22]" >Book An Appointment</button>
+        <button className="bg-[#e36e2a] text-white text-sm font-light px-14 py-3 rounded-full my-6 hover:bg-[#c35d22]">
+          Book An Appointment
+        </button>
       </div>
 
       {/* Listing related service provider */}
-      <RelatedSP spId={povId} speciality={servicePovInfo.speciality}/>
+      <RelatedSP spId={povId} speciality={servicePovInfo.speciality} />
     </div>
   );
 }

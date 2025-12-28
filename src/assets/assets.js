@@ -38,6 +38,9 @@ import ContactHero from "./ContactHero.jpg";
 import MailIcon from './Icons/MailIcon.svg';
 import PhoneIcon from './Icons/PhoneIcon.svg'
 import BackArrow from './Icons/BackArrow.svg'
+import EditIcon from './Icons/EditIcon.svg';
+import SaveIcon from './Icons/SaveIcon.svg';
+import { Edit } from "lucide-react";
 
 export const assets = {
   logo,
@@ -71,7 +74,9 @@ export const assets = {
   ContactHero,
   MailIcon,
   PhoneIcon,
-  BackArrow
+  BackArrow,
+  EditIcon,
+  SaveIcon
 };
 
 export const specialityData = [
@@ -266,12 +271,14 @@ export const featuredServices = [
     id: "fs1",
     serviceTitle: "Hire a Technician",
     providerName: "Ramesh Khadka",
+    povId: "sp1",
     description:
       "Experienced technician skilled in repairing home appliances with quick diagnostic service.",
     cost: 1800,
     review: 4.8,
     category: "Technician",
     image: TechnicianService,
+    subImage1: TechnicianService,
   },
   {
     id: "fs2",

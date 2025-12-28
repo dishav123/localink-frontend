@@ -2,44 +2,71 @@ import { assets } from "../../assets/assets";
 
 function Header() {
     return ( 
-        <div className="relative flex flex-col md:flex-row flex-wrap bg-[#e36e2a] mt-4 rounded-lg px-6 md:px-10 lg:px-20">
-
-            {/* Decorative Rectangle */}
-            {/* <div className="absolute bottom-0 left-0 w-28 h-12 rounded-tr-lg bg-white"></div> */}
+        <div className="relative overflow-hidden bg-gradient-to-br from-[#F3752B] to-[#e36e2a] mt-4 rounded-2xl shadow-xl">
             
+            {/* Container with proper padding */}
+            <div className="flex flex-col lg:flex-row items-center max-w-7xl mx-auto">
+                
+                {/* Left Side - Content */}
+                <div className="w-full lg:w-1/2 px-6 sm:px-8 md:px-12 lg:px-16 py-12 sm:py-16 lg:py-20 z-10">
+                    <div className="max-w-xl">
+                        {/* Heading */}
+                        <h1 className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl text-white font-semibold leading-tight mb-6 animate-fadeIn">
+                            Quickly schedule with local professionals
+                        </h1>
 
+                        {/* Group Profiles and Description */}
+                        <div className="flex flex-col sm:flex-row items-start sm:items-center gap-4 mb-8">
+                            <img 
+                                className="w-24 sm:w-28 h-auto" 
+                                src={assets.group_profiles} 
+                                alt="Trusted professionals" 
+                            />
+                            <p className="text-white/90 text-sm sm:text-base leading-relaxed">
+                                Simply browse through our extensive list of trusted professionals, schedule your appointment hassle-free.
+                            </p>
+                        </div>
 
-            {/* leftSide */}
-            <div className="md:w-1/2 flex flex-col items-start justify-center gap-4 py-10 m-auto md:py-[10vw] md:mb-[-30px] ">
-                <p className="text-4xl md:text-4xl lg:text-5xl text-white font-semibold leading-tight md:leading-tight lg:leading-tight ">
-                    Quickly schedule with <br/>local professionals
-                </p>
-
-                <div className="flex flex-col md:flex-row items-center gap-3 text-white text-sm font-light">
-                    <img className="w-28" src={assets.group_profiles} alt="groupprofiles" />
-                    <p>
-                        Simply browse through our extensive list of trusted 
-                        <br/>professionals, schedule your appointment hassle-free.
-                    </p>
+                        {/* CTA Button */}
+                        <a 
+                            className="inline-flex items-center gap-2 bg-white px-6 sm:px-8 py-3 sm:py-3.5 rounded-full text-gray-700 text-sm sm:text-base font-medium shadow-lg hover:shadow-xl hover:scale-105 transition-all duration-300 group" 
+                            href="#speciality"
+                        >
+                            <span>Book Appointment</span>
+                            <img 
+                                className="w-4 h-4 transition-transform duration-300 group-hover:translate-x-1" 
+                                src={assets.arrowIcon} 
+                                alt="" 
+                            />
+                        </a>
+                    </div>
                 </div>
 
-                <a 
-                    className='flex items-center gap-2 bg-white px-8 py-3 rounded-full text-gray-600 text-sm m-auto md:m-0 hover:scale-105 transition-all duration-300' 
-                    href="#speciality"
-                >
-                    Book Appointment 
-                    <img src={assets.arrowIcon} alt="" />
-                </a>
+                {/* Right Side - Image */}
+                <div className="w-full lg:w-1/2 relative lg:h-[500px] xl:h-[600px]">
+                    {/* Mobile/Tablet View */}
+                    <div className="lg:hidden w-full px-6 pb-8">
+                        <img
+                            className="w-full h-auto rounded-xl shadow-2xl object-cover"
+                            src={assets.headerImage2}
+                            alt="Professional services"
+                        />
+                    </div>
+
+                    {/* Desktop View - Positioned Image */}
+                    <div className="hidden lg:block absolute inset-0">
+                        <img
+                            className="absolute bottom-0 right-0 w-full max-w-[500px] xl:max-w-[600px] h-auto object-contain"
+                            src={assets.headerImage2}
+                            alt="Professional services"
+                        />
+                    </div>
+                </div>
             </div>
 
-            {/* RightSide */}
-            <div className="md:w-1/2 relative">
-                <img
-                    className="w-full max-w-[620px] md:w-[420px] sm:[120px] md:absolute md:bottom-0 md:right-2.5 h-auto rounded-lg object-cover"
-                    src={assets.headerImage2}
-                    alt="header visual"
-                />
-            </div>
+            {/* Decorative Elements */}
+            <div className="absolute top-0 right-0 w-64 h-64 bg-white/5 rounded-full blur-3xl -z-0"></div>
+            <div className="absolute bottom-0 left-0 w-48 h-48 bg-white/5 rounded-full blur-3xl -z-0"></div>
         </div>
     );
 }

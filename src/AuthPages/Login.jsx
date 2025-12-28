@@ -3,10 +3,18 @@ import { useNavigate } from "react-router";
 import { assets } from "../assets/assets";
 
 function Login() {
-  const [phoneLogin, setPhoneLogin] = useState(false);
+  const [phoneLogin, setPhoneLogin] = useState(true);
+  const [email,setEmail] = useState("");
+  const [contactNumber,setContactNumber] = useState("");
   const navigate = useNavigate();
 
+  const onSubmitHandler = async (e) => {
+    e.preventDefault();
+    
+  }
+
   return (
+    <form> 
     <div className="min-h-screen flex items-center justify-center relative">
       
       {/* Top-left back button */}
@@ -43,6 +51,8 @@ function Login() {
                   type="tel"
                   className="flex-1 text-sm outline-none"
                   placeholder="Contact Number"
+                  value={contactNumber}
+                  onChange={(e) => setContactNumber(e.target.value)}
                 />
               </div>
               <button className="w-full bg-[#e36e2a] py-3 rounded-xl text-white font-medium hover:bg-[#c85c1c] transition">
@@ -55,6 +65,9 @@ function Login() {
               <input
                 className="w-full border border-gray-300 rounded-xl px-4 py-3 text-sm focus:outline-none focus:ring-2 focus:ring-[#e36e2a]/40"
                 placeholder="Mailing Address"
+                type="text"
+                value={email}
+                onChange={(e) => setEmail(e.target.value)}
               />
               <button className="w-full bg-[#e36e2a] py-3 rounded-xl text-white font-medium hover:bg-[#c85c1c] transition">
                 Continue
@@ -72,6 +85,7 @@ function Login() {
 
             {phoneLogin ? (
               <button
+                type="button"
                 className=" flex justify-center items-center gap-x-2 w-full py-3 border border-gray-300 rounded-xl text-sm hover:bg-gray-50 transition text-gray-500"
                 onClick={() => setPhoneLogin(false)}
               >
@@ -80,6 +94,7 @@ function Login() {
               </button>
             ) : (
               <button
+                type="button"
                 className=" flex justify-center gap-x-2 w-full py-3 border border-gray-300 rounded-xl text-sm hover:bg-gray-50 transition text-gray-500 "
                 onClick={() => setPhoneLogin(true)}
               >
@@ -108,6 +123,7 @@ function Login() {
         </div>
       </div>
     </div>
+    </form>
   );
 }
 
