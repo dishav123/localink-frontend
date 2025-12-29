@@ -1,88 +1,39 @@
 import { useContext, useEffect, useState } from "react";
-import { useParams } from "react-router";
+import { useParams, useNavigate } from "react-router";
 import { AppContext } from "../context/AppContext";
 import { assets } from "../assets/assets";
 import RelatedSP from "../components/AppointmentPageComponent/RelatedSP";
 import BookingSlots from "../components/BookingComponent/BookingSlots.jsx";
 
 function MyAppointment() {
+  const navigate = useNavigate();
   const { povId } = useParams();
   const { serviceProviders } = useContext(AppContext);
-  const dayOfWeek = ["SUN", "MON", "TUE", "WED", "THU", "FRI", "SAT"];
 
   const [servicePovInfo, setServicePovInfo] = useState(null);
   const [isExpanded, setIsExpanded] = useState(false);
-  const [spSlots, setSpSlots] = useState([]);
-  const [slotIndex, setSlotIndex] = useState(0);
-  const [slotTime, setSlotTime] = useState("");
-
-  const getAvailableSlots = async () => {
-    setSpSlots([]);
-
-    let today = new Date();
-    let startIndex = 0;
-
-    if (today.getHours() >= 21) {
-      startIndex = 1;
-    }
-
-    for (let i = startIndex; i < startIndex + 7; i++) {
-      let currentDate = new Date(today);
-      currentDate.setDate(today.getDate() + i);
-
-      let endDateTime = new Date(today);
-      endDateTime.setDate(today.getDate() + i);
-      endDateTime.setHours(18, 0, 0, 0);
-
-      // Set start time
-      if (today.getDate() === currentDate.getDate()) {
-        // Only for today
-        currentDate.setHours(
-          currentDate.getHours() > 8 ? currentDate.getHours() + 1 : 8
-        );
-        currentDate.setMinutes(currentDate.getMinutes() > 30 ? 30 : 0);
-      } else {
-        currentDate.setHours(8, 0, 0, 0);
-      }
-
-      let timeSlots = [];
-
-      while (currentDate < endDateTime) {
-        let formattedTime = currentDate.toLocaleTimeString([], {
-          hour: "2-digit",
-          minute: "2-digit",
-        });
-
-        timeSlots.push({
-          datetime: new Date(currentDate),
-          time: formattedTime,
-        });
-
-        currentDate.setMinutes(currentDate.getMinutes() + 30);
-      }
-
-      setSpSlots((prev) => [...prev, timeSlots]);
-    }
-  };
+  const [showRatings, setShowRatings] = useState(false);
 
   useEffect(() => {
     const spInfo = serviceProviders.find((sp) => sp._id === povId);
     setServicePovInfo(spInfo);
   }, [povId, serviceProviders]);
 
-  useEffect(() => {
-    getAvailableSlots();
-  }, [servicePovInfo]);
-
-  useEffect(() => {
-    // console.log(spSlots);
-  }, [spSlots]);
-
   if (!servicePovInfo) return null;
 
   return (
-    <div>
-      <div className="w-full flex flex-col md:flex-row gap-6 p-4">
+    <div className="max-w-7xl mx-auto px-4">
+      {/* Back Button */}
+      <div className="flex justify-start mb-6">
+        <button
+          onClick={() => navigate(-1)}
+          className="flex items-center gap-2 text-base text-gray-600 hover:text-[#e36e2a] transition"
+        >
+          ← Back
+        </button>
+      </div>
+
+      <div className="w-full flex flex-col md:flex-row gap-6">
         {/* IMAGE SECTION */}
         <div className="md:w-1/4 w-full flex-1 flex items-start p-4 bg-[#e36e2a] rounded-lg">
           <div className="w-62 h-80">
@@ -103,7 +54,8 @@ function MyAppointment() {
 
           <div className="flex flex-wrap gap-3 items-center text-gray-600">
             <p className="text-base">
-              {servicePovInfo.speciality} — {servicePovInfo.masterIn}
+              {servicePovInfo.speciality}
+              {servicePovInfo.masterIn && ` — ${servicePovInfo.masterIn}`}
             </p>
             <span className="border rounded-full px-3 py-1 text-sm bg-gray-100">
               {servicePovInfo.experience}
@@ -126,7 +78,7 @@ function MyAppointment() {
             {servicePovInfo.description.length > 120 && (
               <button
                 onClick={() => setIsExpanded(!isExpanded)}
-                className=" text-[#e36e2a] text-sm font-medium hover:underline w-fit"
+                className="text-[#e36e2a] text-sm font-medium hover:underline w-fit"
               >
                 {isExpanded ? "Show Less" : "Show More"}
               </button>
@@ -155,7 +107,7 @@ function MyAppointment() {
       </div>
 
       {/* Booking Slots */}
-      <div className="sm:ml-80 sm:pl-4 mt-4">
+      <div className="sm:ml-80 sm:pl-4 mt-8">
         <BookingSlots
           onSlotSelect={(slot) => {
             console.log("Selected Slot:", slot);
@@ -167,8 +119,275 @@ function MyAppointment() {
         </button>
       </div>
 
+      {/* Description & Reviews Tabs Section */}
+      <div className="mt-12 mb-8">
+        {/* Tabs */}
+        <div className="border-b border-gray-200">
+          <div className="flex gap-12">
+            <button
+              onClick={() => setShowRatings(false)}
+              className={`pb-3 text-lg font-medium transition relative ${
+                !showRatings
+                  ? "text-gray-900"
+                  : "text-gray-500 hover:text-gray-700"
+              }`}
+            >
+              Description
+              {!showRatings && (
+                <div className="absolute bottom-0 left-0 right-0 h-0.5 bg-gray-900" />
+              )}
+            </button>
+            <button
+              onClick={() => setShowRatings(true)}
+              className={`pb-3 text-lg font-medium transition relative ${
+                showRatings
+                  ? "text-gray-900"
+                  : "text-gray-500 hover:text-gray-700"
+              }`}
+            >
+              Ratings & Reviews
+              {showRatings && (
+                <div className="absolute bottom-0 left-0 right-0 h-0.5 bg-gray-900" />
+              )}
+            </button>
+          </div>
+        </div>
+
+        {/* Content */}
+        <div className="mt-8">
+          {!showRatings ? (
+            // Description Tab
+            <div className="space-y-8">
+              {servicePovInfo.detailedDescription?.overview && (
+                <div>
+                  <p className="text-gray-600 text-lg leading-relaxed">
+                    {servicePovInfo.detailedDescription.overview}
+                  </p>
+                </div>
+              )}
+
+              {servicePovInfo.skills && servicePovInfo.skills.length > 0 && (
+                <div>
+                  <h3 className="text-2xl font-semibold text-gray-900 mb-4">
+                    Skills & Expertise
+                  </h3>
+                  <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
+                    {servicePovInfo.skills.map((skill, index) => (
+                      <div
+                        key={index}
+                        className="flex items-center gap-3 bg-gray-50 rounded-lg px-4 py-3"
+                      >
+                        <div className="w-2 h-2 rounded-full bg-[#e36e2a]" />
+                        <span className="text-base text-gray-700">{skill}</span>
+                      </div>
+                    ))}
+                  </div>
+                </div>
+              )}
+
+              {/* Additional Info */}
+              <div>
+                <h3 className="text-2xl font-semibold text-gray-900 mb-4">
+                  Service Highlights
+                </h3>
+                <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                  <div className="flex items-start gap-3 bg-gray-50 rounded-lg px-4 py-4">
+                    <svg
+                      className="w-6 h-6 text-green-600 mt-0.5 flex-shrink-0"
+                      fill="currentColor"
+                      viewBox="0 0 20 20"
+                    >
+                      <path
+                        fillRule="evenodd"
+                        d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z"
+                        clipRule="evenodd"
+                      />
+                    </svg>
+                    <div>
+                      <p className="text-base font-medium text-gray-900">
+                        Experience
+                      </p>
+                      <p className="text-sm text-gray-600 mt-1">
+                        {servicePovInfo.experience}
+                      </p>
+                    </div>
+                  </div>
+
+                  <div className="flex items-start gap-3 bg-gray-50 rounded-lg px-4 py-4">
+                    <svg
+                      className="w-6 h-6 text-green-600 mt-0.5 flex-shrink-0"
+                      fill="currentColor"
+                      viewBox="0 0 20 20"
+                    >
+                      <path
+                        fillRule="evenodd"
+                        d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z"
+                        clipRule="evenodd"
+                      />
+                    </svg>
+                    <div>
+                      <p className="text-base font-medium text-gray-900">
+                        Completed Projects
+                      </p>
+                      <p className="text-sm text-gray-600 mt-1">
+                        {servicePovInfo.completedProjects}+ Projects
+                      </p>
+                    </div>
+                  </div>
+
+                  {servicePovInfo.emergencyAvailable && (
+                    <div className="flex items-start gap-3 bg-gray-50 rounded-lg px-4 py-4">
+                      <svg
+                        className="w-6 h-6 text-green-600 mt-0.5 flex-shrink-0"
+                        fill="currentColor"
+                        viewBox="0 0 20 20"
+                      >
+                        <path
+                          fillRule="evenodd"
+                          d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z"
+                          clipRule="evenodd"
+                        />
+                      </svg>
+                      <div>
+                        <p className="text-base font-medium text-gray-900">
+                          Emergency Service
+                        </p>
+                        <p className="text-sm text-gray-600 mt-1">
+                          Available 24/7 - Rs. {servicePovInfo.emergencyFees}/hour
+                        </p>
+                      </div>
+                    </div>
+                  )}
+
+                  <div className="flex items-start gap-3 bg-gray-50 rounded-lg px-4 py-4">
+                    <svg
+                      className="w-6 h-6 text-green-600 mt-0.5 flex-shrink-0"
+                      fill="currentColor"
+                      viewBox="0 0 20 20"
+                    >
+                      <path
+                        fillRule="evenodd"
+                        d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z"
+                        clipRule="evenodd"
+                      />
+                    </svg>
+                    <div>
+                      <p className="text-base font-medium text-gray-900">
+                        Customer Rating
+                      </p>
+                      <p className="text-sm text-gray-600 mt-1">
+                        {servicePovInfo.rating} ⭐ ({servicePovInfo.totalReviews} reviews)
+                      </p>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          ) : (
+            // Ratings & Reviews Tab
+            <div className="space-y-8">
+              {/* Rating Overview */}
+              <div className="flex flex-col md:flex-row gap-8 pb-8 border-b border-gray-200">
+                {/* Left: Overall Rating */}
+                <div className="md:w-1/3 text-center md:text-left">
+                  <div className="text-7xl font-semibold text-gray-900">
+                    {servicePovInfo.rating}
+                  </div>
+                  <div className="flex items-center justify-center md:justify-start gap-1 mt-3">
+                    {[...Array(5)].map((_, i) => (
+                      <svg
+                        key={i}
+                        className={`w-6 h-6 ${
+                          i < Math.floor(servicePovInfo.rating)
+                            ? "text-[#e36e2a]"
+                            : "text-gray-300"
+                        }`}
+                        fill="currentColor"
+                        viewBox="0 0 20 20"
+                      >
+                        <path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z" />
+                      </svg>
+                    ))}
+                  </div>
+                  <p className="text-base text-gray-500 mt-2">
+                    {servicePovInfo.totalReviews} Reviews
+                  </p>
+                </div>
+
+                {/* Right: Rating Bars */}
+                <div className="md:w-2/3 space-y-3">
+                  {[5, 4, 3, 2, 1].map((star) => {
+                    const reviews = servicePovInfo.customerReviews || [];
+                    const count = reviews.filter(
+                      (r) => Math.floor(r.rating) === star
+                    ).length;
+                    const percentage =
+                      reviews.length > 0 ? (count / reviews.length) * 100 : 0;
+
+                    return (
+                      <div key={star} className="flex items-center gap-4">
+                        <span className="text-base text-gray-600 w-8">
+                          {star}★
+                        </span>
+                        <div className="flex-1 h-3 bg-gray-200 rounded-full overflow-hidden">
+                          <div
+                            className="h-full bg-[#e36e2a] rounded-full transition-all"
+                            style={{ width: `${percentage}%` }}
+                          />
+                        </div>
+                        <span className="text-base text-gray-500 w-16 text-right">
+                          {count}
+                        </span>
+                      </div>
+                    );
+                  })}
+                </div>
+              </div>
+
+              {/* Customer Reviews */}
+              <div>
+                <h3 className="text-2xl font-semibold text-gray-900 mb-6">
+                  Customer Reviews
+                </h3>
+                <div className="space-y-6">
+                  {servicePovInfo.customerReviews?.map((review, index) => (
+                    <div
+                      key={index}
+                      className="border-b border-gray-200 pb-6 last:border-0"
+                    >
+                      <div className="flex items-center gap-2 mb-3">
+                        {[...Array(5)].map((_, i) => (
+                          <svg
+                            key={i}
+                            className={`w-5 h-5 ${
+                              i < Math.floor(review.rating)
+                                ? "text-[#e36e2a]"
+                                : "text-gray-300"
+                            }`}
+                            fill="currentColor"
+                            viewBox="0 0 20 20"
+                          >
+                            <path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z" />
+                          </svg>
+                        ))}
+                      </div>
+                      <p className="font-medium text-lg text-gray-900 mb-2">
+                        {review.name}
+                      </p>
+                      <p className="text-base text-gray-600 leading-relaxed">
+                        {review.comment}
+                      </p>
+                    </div>
+                  ))}
+                </div>
+              </div>
+            </div>
+          )}
+        </div>
+      </div>
+
       {/* Listing related service provider */}
-      <RelatedSP spId={povId} speciality={servicePovInfo.speciality} />
+      <RelatedSP  spId={povId} speciality={servicePovInfo.speciality} />
     </div>
   );
 }
