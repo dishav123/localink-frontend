@@ -2,10 +2,12 @@ import { useState } from "react";
 import { useNavigate } from "react-router";
 import { assets } from "../assets/assets";
 
-function Login() {
+function ProviderLogin() {
   const [phoneLogin, setPhoneLogin] = useState(true);
   const [email, setEmail] = useState("");
   const [contactNumber, setContactNumber] = useState("");
+  const [password, setPassword] = useState("");
+  const [showPassword, setShowPassword] = useState(false);
   const navigate = useNavigate();
 
   const onSubmitHandler = async (e) => {
@@ -31,7 +33,7 @@ function Login() {
             <div className="flex flex-col items-center gap-2">
               <img src={assets.logo} alt="" className="w-20" />
               <p className=" text-gray-500 text-center text-3xl">
-                Unlock the booking feature,{" "}
+                Welcome to Provider's Club,{" "}
                 <span className="font-bold bg-linear-to-r from-[#e36e2a] to-[#f4a261] bg-clip-text text-transparent">
                   LOGIN.
                 </span>
@@ -66,7 +68,62 @@ function Login() {
                     </label>
                   </div>
                 </div>
-                <button 
+                <div className="relative">
+                  <input
+                    type={showPassword ? "text" : "password"}
+                    className="w-full border border-gray-300 rounded-xl px-4 py-3 pr-12 text-sm outline-none focus:ring-2 focus:ring-[#e36e2a]/40 peer placeholder:text-gray-400"
+                    placeholder={password ? "••••••••" : ""}
+                    value={password}
+                    onChange={(e) => setPassword(e.target.value)}
+                    id="password-input"
+                  />
+                  <label
+                    htmlFor="password-input"
+                    className={`absolute left-4 transition-all duration-200 pointer-events-none ${
+                      password
+                        ? "text-xs -top-2 bg-white px-1 text-[#e36e2a]"
+                        : "text-sm top-3 text-gray-500 peer-focus:text-xs peer-focus:-top-2 peer-focus:bg-white peer-focus:px-1 peer-focus:text-[#e36e2a]"
+                    }`}
+                  >
+                    Provider Passcode
+                  </label>
+                  <button
+                    type="button"
+                    onClick={() => setShowPassword(!showPassword)}
+                    className="absolute right-4 top-1/2 -translate-y-1/2 text-gray-400 hover:text-gray-600 transition"
+                  >
+                    {showPassword ? (
+                      <svg
+                        xmlns="http://www.w3.org/2000/svg"
+                        className="w-5 h-5"
+                        viewBox="0 0 24 24"
+                        fill="none"
+                        stroke="currentColor"
+                        strokeWidth="2"
+                        strokeLinecap="round"
+                        strokeLinejoin="round"
+                      >
+                        <path d="M17.94 17.94A10.07 10.07 0 0 1 12 20c-7 0-11-8-11-8a18.45 18.45 0 0 1 5.06-5.94M9.9 4.24A9.12 9.12 0 0 1 12 4c7 0 11 8 11 8a18.5 18.5 0 0 1-2.16 3.19m-6.72-1.07a3 3 0 1 1-4.24-4.24" />
+                        <line x1="1" y1="1" x2="23" y2="23" />
+                      </svg>
+                    ) : (
+                      <svg
+                        xmlns="http://www.w3.org/2000/svg"
+                        className="w-5 h-5"
+                        viewBox="0 0 24 24"
+                        fill="none"
+                        stroke="currentColor"
+                        strokeWidth="2"
+                        strokeLinecap="round"
+                        strokeLinejoin="round"
+                      >
+                        <path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z" />
+                        <circle cx="12" cy="12" r="3" />
+                      </svg>
+                    )}
+                  </button>
+                </div>
+                <button
                   type="submit"
                   className="w-full bg-[#e36e2a] py-3 rounded-xl text-white font-medium hover:bg-[#c85c1c] transition"
                 >
@@ -95,7 +152,62 @@ function Login() {
                     Email Address
                   </label>
                 </div>
-                <button 
+                <div className="relative">
+                  <input
+                    type={showPassword ? "text" : "password"}
+                    className="w-full border border-gray-300 rounded-xl px-4 py-3 pr-12 text-sm outline-none focus:ring-2 focus:ring-[#e36e2a]/40 peer placeholder:text-gray-400"
+                    placeholder={password ? "••••••••" : ""}
+                    value={password}
+                    onChange={(e) => setPassword(e.target.value)}
+                    id="password-input-email"
+                  />
+                  <label
+                    htmlFor="password-input-email"
+                    className={`absolute left-4 transition-all duration-200 pointer-events-none ${
+                      password
+                        ? "text-xs -top-2 bg-white px-1 text-[#e36e2a]"
+                        : "text-sm top-3 text-gray-500 peer-focus:text-xs peer-focus:-top-2 peer-focus:bg-white peer-focus:px-1 peer-focus:text-[#e36e2a]"
+                    }`}
+                  >
+                    Provider Passcode
+                  </label>
+                  <button
+                    type="button"
+                    onClick={() => setShowPassword(!showPassword)}
+                    className="absolute right-4 top-1/2 -translate-y-1/2 text-gray-400 hover:text-gray-600 transition"
+                  >
+                    {showPassword ? (
+                      <svg
+                        xmlns="http://www.w3.org/2000/svg"
+                        className="w-5 h-5"
+                        viewBox="0 0 24 24"
+                        fill="none"
+                        stroke="currentColor"
+                        strokeWidth="2"
+                        strokeLinecap="round"
+                        strokeLinejoin="round"
+                      >
+                        <path d="M17.94 17.94A10.07 10.07 0 0 1 12 20c-7 0-11-8-11-8a18.45 18.45 0 0 1 5.06-5.94M9.9 4.24A9.12 9.12 0 0 1 12 4c7 0 11 8 11 8a18.5 18.5 0 0 1-2.16 3.19m-6.72-1.07a3 3 0 1 1-4.24-4.24" />
+                        <line x1="1" y1="1" x2="23" y2="23" />
+                      </svg>
+                    ) : (
+                      <svg
+                        xmlns="http://www.w3.org/2000/svg"
+                        className="w-5 h-5"
+                        viewBox="0 0 24 24"
+                        fill="none"
+                        stroke="currentColor"
+                        strokeWidth="2"
+                        strokeLinecap="round"
+                        strokeLinejoin="round"
+                      >
+                        <path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z" />
+                        <circle cx="12" cy="12" r="3" />
+                      </svg>
+                    )}
+                  </button>
+                </div>
+                <button
                   type="submit"
                   className="w-full bg-[#e36e2a] py-3 rounded-xl text-white font-medium hover:bg-[#c85c1c] transition"
                 >
@@ -133,16 +245,6 @@ function Login() {
               )}
             </div>
 
-            <div>
-              <a
-                href="/register"
-                className="text-sm text-[#e36e2a] hover:text-[#ef5f0c]"
-              >
-                Don't have an account,{" "}
-                <span className="underline">Register</span>
-              </a>
-            </div>
-
             {/* Info */}
             <p className="text-center text-xs text-gray-400 leading-relaxed">
               By continuing, you confirm that you have read, understood, and
@@ -153,56 +255,9 @@ function Login() {
             </p>
           </div>
         </div>
-
-        {/* Admin and Provider Login Options - Right Bottom */}
-        <div className="absolute right-1 bottom-80 flex flex-col gap-y-2">
-          {/* Admin Login */}
-          <div className="group relative">
-            <button
-              type="button"
-              className="w-14 h-14 bg-gray-100 flex items-center justify-center rounded-2xl transition-all duration-300 hover:bg-[#e36e2a] shadow-sm hover:shadow-md"
-              onClick={() => navigate("/admin-login")}
-            >
-              <img 
-                src={assets.AdminIcon} 
-                alt="Admin" 
-                className="w-8 h-8 transition-all duration-300 group-hover:brightness-0 group-hover:invert"
-              />
-            </button>
-            {/* Tooltip */}
-            <div className="absolute right-full mr-3 top-1/2 -translate-y-1/2 opacity-0 group-hover:opacity-100 transition-opacity duration-300 pointer-events-none">
-              <div className="bg-gray-800 text-white text-xs px-3 py-2 rounded-lg whitespace-nowrap">
-                Admin Login
-                <div className="absolute right-0 top-1/2 -translate-y-1/2 translate-x-full w-0 h-0 border-t-4 border-b-4 border-l-4 border-transparent border-l-gray-800"></div>
-              </div>
-            </div>
-          </div>
-
-          {/* Provider Login */}
-          <div className="group relative">
-            <button
-              type="button"
-              className="w-14 h-14 bg-gray-100 flex items-center justify-center rounded-2xl transition-all duration-300 hover:bg-[#e36e2a] shadow-sm hover:shadow-md"
-              onClick={() => navigate("/provider-login")}
-            >
-              <img 
-                src={assets.ProviderIcon} 
-                alt="Provider" 
-                className="w-8 h-8 transition-all duration-300 group-hover:brightness-0 group-hover:invert"
-              />
-            </button>
-            {/* Tooltip */}
-            <div className="absolute right-full mr-3 top-1/2 -translate-y-1/2 opacity-0 group-hover:opacity-100 transition-opacity duration-300 pointer-events-none">
-              <div className="bg-gray-800 text-white text-xs px-3 py-2 rounded-lg whitespace-nowrap">
-                Provider Login
-                <div className="absolute right-0 top-1/2 -translate-y-1/2 translate-x-full w-0 h-0 border-t-4 border-b-4 border-l-4 border-transparent border-l-gray-800"></div>
-              </div>
-            </div>
-          </div>
-        </div>
       </div>
     </form>
   );
 }
 
-export default Login;
+export default ProviderLogin;

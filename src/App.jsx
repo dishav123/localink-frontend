@@ -12,10 +12,12 @@ import Appointment from "./pages/Appointment"
 import Services from "./pages/Services";
 import Footer from "./components/Footer";
 import FeaturedServices from "./pages/FeaturedServices";
+import AdminLogin from "./AuthPages/AdminLogin";
+import ProviderLogin from "./AuthPages/ProvidersLogin";
 
 export default function App() {
   const location = useLocation();
-  const hideLayout = ["/login", "/register"].includes(location.pathname);
+  const hideLayout = ["/login", "/register","/admin-login","/provider-login"].includes(location.pathname);
 
   return (
     <div className="mx-5 sm:mx-[8%]">
@@ -35,6 +37,8 @@ export default function App() {
         <Route path='/appointment/:povId' element={<Appointment/>} />
         <Route path='/login' element={<Login/>} />
         <Route path='/register' element={<Register/>}/>
+        <Route path='/admin-login' element={<AdminLogin/>}/>
+        <Route path='/provider-login' element={<ProviderLogin/>}/>
       </Routes>
 
       {!hideLayout && <Footer />}

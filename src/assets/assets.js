@@ -41,6 +41,8 @@ import BackArrow from './Icons/BackArrow.svg'
 import EditIcon from './Icons/EditIcon.svg';
 import SaveIcon from './Icons/SaveIcon.svg';
 import TechnicianSub1 from "./ServiceProviderImage/TechnicianSub1.png";
+import AdminIcon from "./Icons/AdminIcon.svg";
+import ProviderIcon from "./Icons/ProviderIcon.svg";
 
 export const assets = {
   logo,
@@ -76,7 +78,9 @@ export const assets = {
   PhoneIcon,
   BackArrow,
   EditIcon,
-  SaveIcon
+  SaveIcon,
+  AdminIcon,
+  ProviderIcon,
 };
 
 export const specialityData = [
