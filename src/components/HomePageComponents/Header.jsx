@@ -56,7 +56,7 @@ function Header() {
                     {/* Desktop View - Positioned Image */}
                     <div className="hidden lg:block absolute inset-0">
                         <img
-                            className="absolute bottom-0 right-0 w-full max-w-[500px] xl:max-w-[600px] h-auto object-contain"
+                            className="absolute bottom-0 right-0 w-full max-w-[400px] xl:max-w-[500px] h-auto object-contain"
                             src={assets.headerImage2}
                             alt="Professional services"
                         />

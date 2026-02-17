@@ -1,4 +1,5 @@
 import { Route, Routes, useLocation } from "react-router";
+import { useState } from "react";
 import Home from "./pages/Home";
 import ServiceProviders from "./pages/ServiceProviders";
 import Contact from "./pages/Contact";
@@ -14,15 +15,36 @@ import Footer from "./components/Footer";
 import FeaturedServices from "./pages/FeaturedServices";
 import AdminLogin from "./AuthPages/AdminLogin";
 import ProviderLogin from "./AuthPages/ProvidersLogin";
+import OtpPage from "./AuthPages/OtpPage";
+import ServiceProviderWizard from "./components/ServiceProviderWizardComponents/ServiceProviderWizard";
+import axios from "./api/axios";
+import { useEffect } from "react";
 
 export default function App() {
   const location = useLocation();
-  const hideLayout = ["/login", "/register","/admin-login","/provider-login"].includes(location.pathname);
+  const hideLayout = ["/login", "/register","/admin-login","/provider-login","/otp-page"].includes(location.pathname);
+  const [user,setUser]=useState(null);
+  const [loading,setLoading]=useState(true);
+  
+    useEffect(() => {
+    const fetchUser = async () => {
+      try {
+        const res = await axios.get("/auth/me");
+        setUser(res.data.user);
+        console.log("Fetched user:", res.data.user);
+      } catch (error) {
+        setUser(null);
+      } finally {
+        setLoading(false);
+      }
+    };
 
+    fetchUser();
+  }, []);
   return (
     <div className="mx-5 sm:mx-[8%]">
       
-      {!hideLayout && <Navbar />}
+      {!hideLayout && <Navbar user={user} setUser={setUser} loading={loading} />}
 
       <Routes>
         <Route path='/' element={<Home/>} />
@@ -39,6 +61,8 @@ export default function App() {
         <Route path='/register' element={<Register/>}/>
         <Route path='/admin-login' element={<AdminLogin/>}/>
         <Route path='/provider-login' element={<ProviderLogin/>}/>
+        <Route path='/otp-page' element={<OtpPage/>}/>
+        <Route path='/become-provider' element={<ServiceProviderWizard/>}/>
       </Routes>
 
       {!hideLayout && <Footer />}

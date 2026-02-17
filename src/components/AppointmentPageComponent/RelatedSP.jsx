@@ -1,6 +1,6 @@
 import { useContext, useEffect, useState } from "react";
 import { AppContext } from "../../context/AppContext";
-import ServiceCard from "../../MiniComponents/ServiceCard";
+import ServiceCard from "../MiniComponents/ServiceCard";
 import { useNavigate } from "react-router";
 
 function RelatedSP({spId,speciality}) {

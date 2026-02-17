@@ -20,7 +20,7 @@ function ProviderLogin() {
         {/* Top-left back button */}
         <button
           type="button"
-          onClick={() => navigate("/")}
+          onClick={() => navigate("/login")}
           className="absolute top-5 left-5 w-10 h-10 flex items-center justify-center border border-gray-300 rounded-full shadow-sm hover:bg-gray-100 transition"
           aria-label="Go back"
         >

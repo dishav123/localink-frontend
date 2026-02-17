@@ -1,6 +1,6 @@
 import { useContext, useEffect, useState } from "react";
 import { useNavigate, useParams } from "react-router";
-import ServiceCard from "../MiniComponents/ServiceCard";
+import ServiceCard from "../components/MiniComponents/ServiceCard";
 import { AppContext } from "../context/AppContext";
 
 function ServiceProviders() {

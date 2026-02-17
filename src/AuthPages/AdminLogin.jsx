@@ -2,15 +2,13 @@ import { useState } from "react";
 import { useNavigate } from "react-router";
 import { assets } from "../assets/assets";
 
-
-
 function AdminLogin() {
     const [phoneLogin, setPhoneLogin] = useState(true);
-  const [email, setEmail] = useState("");
-  const [contactNumber, setContactNumber] = useState("");
-  const [password, setPassword] = useState("");
-  const [showPassword, setShowPassword] = useState(false);
-  const navigate = useNavigate();
+    const [email, setEmail] = useState("");
+    const [contactNumber, setContactNumber] = useState("");
+    const [password, setPassword] = useState("");
+    const [showPassword, setShowPassword] = useState(false);
+    const navigate = useNavigate();
 
   const onSubmitHandler = async (e) => {
     e.preventDefault();
@@ -22,7 +20,7 @@ function AdminLogin() {
         {/* Top-left back button */}
         <button
           type="button"
-          onClick={() => navigate("/")}
+          onClick={() => navigate("/login")}
           className="absolute top-5 left-5 w-10 h-10 flex items-center justify-center border border-gray-300 rounded-full shadow-sm hover:bg-gray-100 transition"
           aria-label="Go back"
         >

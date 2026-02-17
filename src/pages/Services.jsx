@@ -1,6 +1,6 @@
 import { useNavigate } from "react-router";
 import { featuredServices } from "../assets/assets";
-import SpecialServiceCard from "../MiniComponents/SpecialServiceCard";
+import SpecialServiceCard from "../components/MiniComponents/SpecialServiceCard";
 
 function Services() {
     const navigate=useNavigate();

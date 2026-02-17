@@ -35,7 +35,7 @@ function Footer() {
             </div>
             {/* Copyright Text */}
                 <div>
-                    <hr className="rounded-full border-t border-gray-500 "/>
+                    <hr className="rounded-full border-t border-gray-900 "/>
                     <p className="py-5 text-sm text-center">Copyright 2024@ Localink - All Right Reserved.</p>
                 </div>
         </div>
