@@ -160,7 +160,7 @@ export default function ServiceProviderWizard() {
                 <StepPersonal data={form} update={updateField} errors={errors} />
               )}
               {step === 2 && <StepSkills data={form} update={updateField} />}
-              {step === 3 && <StepVerification data={form} />}
+              {step === 3 && <StepVerification data={form} update={updateField} />}
               {step === 4 && <StepTerms data={form} update={updateField} />}
             </div>
 

@@ -56,7 +56,6 @@ export function StepPersonal({ data, update, errors }) {
       update("profileImage", null);
     }
     console.log("Selected profile image:", file);
-
   };
 
   return (
@@ -175,20 +174,12 @@ export function StepPersonal({ data, update, errors }) {
               value={data.firstName}
               onChange={(e) => update("firstName", e.target.value)}
               placeholder="Arjun"
-              className={errors.firstName ? "border-red-300 bg-red-50" : ""}
+              className={errors.fullName ? "border-red-300 bg-red-50" : ""}
             />
             {scanned && data.firstName && (
               <Pencil className="absolute right-3 top-1/2 -translate-y-1/2 w-3.5 h-3.5 text-amber-400" />
             )}
           </div>
-        </Field>
-        <Field label="Last Name" required error={errors.lastName}>
-          <Input
-            value={data.lastName}
-            onChange={(e) => update("lastName", e.target.value)}
-            placeholder="Shrestha"
-            className={errors.lastName ? "border-red-300 bg-red-50" : ""}
-          />
         </Field>
       </div>
 
@@ -233,6 +224,17 @@ export function StepPersonal({ data, update, errors }) {
           />
         </Field>
       </div>
+
+      <div className="grid grid-cols-2 gap-4">
+        <Field label="Citizenship Number" required error={errors.citizenshipNo}>
+          <Input
+            value={data.citizenshipNo}
+            onChange={(e) => update("citizenshipNo", e.target.value)}
+            placeholder="12-34-56-7890"
+            className={errors.citizenshipNo ? "border-red-300 bg-red-50" : ""}
+          />
+        </Field>
+        </div>
 
       {/* Gender + Marital */}
       <div className="grid grid-cols-2 gap-6">

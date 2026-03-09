@@ -160,9 +160,6 @@ function MyAppointment() {
             <div className="space-y-8">
               {servicePovInfo.detailedDescription?.overview && (
                 <div>
-                  <p className="text-gray-600 text-lg leading-relaxed">
-                    {servicePovInfo.detailedDescription.overview}
-                  </p>
                 </div>
               )}
 

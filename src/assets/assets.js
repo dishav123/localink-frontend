@@ -133,12 +133,8 @@ export const serviceProviders = [
       "Door & Window Frames",
       "Office Interior Woodwork",
     ],
-    emergencyAvailable: true,
-    emergencyFees: 2200,
-    contact: {
-      phone: "98XXXXXXXX",
-      email: "******@gmail.com",
-    },
+    phone: "98XXXXXXXX",
+    email: "******@gmail.com",
     customerReviews: [
       { name: "Sita Gurung", rating: 5, comment: "Excellent finishing and very professional." },
       { name: "Mohan Shrestha", rating: 4.6, comment: "Delivered on time, great quality work." },
@@ -149,10 +145,6 @@ export const serviceProviders = [
       { name: "Pooja Maharjan", rating: 4.9, comment: "Strongly recommended." },
       { name: "Ramesh Adhikari", rating: 4.6, comment: "Worth the money." },
     ],
-    detailedDescription: {
-      overview:
-        "Ramesh Khadka is a seasoned carpenter with over 5 years of experience delivering premium woodwork solutions across Kathmandu Valley.",
-    },
   },
 
   {

@@ -1,8 +1,10 @@
 // ServiceProviderWizard/steps/StepVerification.jsx
 
+import { useState, useRef } from "react";
 import { CheckCircle2, FileCheck } from "lucide-react";
 
-export function StepVerification({ data }) {
+export function StepVerification({ data, update }) {
+  const fileInputRef = useRef(null);
   const fields = [
     {
       label: "Full Name",
@@ -20,11 +22,27 @@ export function StepVerification({ data }) {
     { label: "Primary Service", value: data.primarySkill || "—" },
     { label: "Experience (yrs)", value: data.yearsOfExperience || "—" },
   ];
+  const [documentImage, setDocumentImage] = useState(null);
+
+  const handleEditClick = () => {
+    fileInputRef.current?.click();
+  };
+
+  const handleDocumentImageChange = (e) => {
+    const file = e.target.files?.[0];
+    if (file) {
+      setDocumentImage(file);
+      update("documentImage", file);
+    } else {
+      update("documentImage", null);
+    }
+    console.log("Selected document image:", file);
+  };
 
   return (
     <div className="space-y-6">
       <div className="bg-amber-50 border border-amber-200 rounded-2xl p-4 flex gap-3">
-        <CheckCircle2 className="w-5 h-5 text-amber-600 flex-shrink-0 mt-0.5" />
+        <CheckCircle2 className="w-5 h-5 text-amber-600 shrink-0 mt-0.5" />
         <div>
           <p className="text-sm font-semibold text-amber-800">
             Review your information
@@ -72,12 +90,14 @@ export function StepVerification({ data }) {
         </p>
         <div className="flex gap-3">
           <div className="flex items-center gap-3 bg-stone-50 border border-stone-200 rounded-xl px-4 py-3 flex-1">
-            <FileCheck className="w-8 h-8 text-emerald-500 flex-shrink-0" />
+            <FileCheck className="w-8 h-8 text-emerald-500 shrink-0" />
             <div className="flex-1">
               <p className="text-sm font-semibold text-stone-700">
                 Citizenship Document
               </p>
-              <p className="text-xs text-stone-400">Uploaded · Verified by OCR</p>
+              <input ref={fileInputRef} type="file" className="mt-2" hidden onChange={handleDocumentImageChange}/>
+              <button className="text-xs text-amber-600 hover:text-amber-700 font-medium border px-2 py-1 rounded-full mt-2"
+              onClick={handleEditClick}>Edit</button>
             </div>
             <CheckCircle2 className="w-5 h-5 text-emerald-500 ml-auto" />
           </div>

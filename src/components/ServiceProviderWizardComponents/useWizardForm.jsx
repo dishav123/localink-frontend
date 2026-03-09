@@ -35,7 +35,6 @@ const INITIAL_FORM_STATE = {
   agreedToTerms: false,
   agreedToPrivacy: false,
   agreedToConduct: false,
-  onboardingRating: 0,
 };
 
 export const useWizardForm = () => {
@@ -129,7 +128,7 @@ export const useWizardForm = () => {
         }
       });
 
-        api.post("sp-onboarding/become-provider", fd)
+      api.post("sp-onboarding/become-provider", fd)
         .then((response) => {
           console.log("Registration successful:", response.data);
         })
