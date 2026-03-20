@@ -1,14 +1,25 @@
-import { useState, useRef } from "react";
+import { useState, useRef, useEffect} from "react";
 import { useLocation, useNavigate } from "react-router";
 import axios from "../api/axios";
 import { assets } from "../assets/assets";
+import { useContext } from "react";
+import { AppContext } from "../context/AppContext";
+import { toast } from "react-toastify";
+
 
 function OtpPage() {
-const [otp, setOtp] = useState(["", "", "", "", "", ""]);
+  const [otp, setOtp] = useState(["", "", "", "", "", ""]);
   const [timer, setTimer] = useState(60);
   const inputRefs = useRef([]);
   const navigate = useNavigate();
-  const location=useLocation();
+  const location = useLocation();
+  const { token, setToken } = useContext(AppContext);
+
+  useEffect(() => {
+    if (token) {
+      navigate("/");
+    }
+  }, [token]);
 
   const handleChange = (index, value) => {
     // Only allow numbers
@@ -34,7 +45,7 @@ const [otp, setOtp] = useState(["", "", "", "", "", ""]);
   const handlePaste = (e) => {
     e.preventDefault();
     const pastedData = e.clipboardData.getData("text").slice(0, 6);
-    
+
     if (!/^\d+$/.test(pastedData)) return;
 
     const newOtp = [...otp];
@@ -54,22 +65,30 @@ const [otp, setOtp] = useState(["", "", "", "", "", ""]);
     inputRefs.current[0]?.focus();
   };
 
-  const handleSubmit = async(e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
     const otpValue = otp.join("");
     if (otpValue.length === 6) {
-      await axios.post("/auth/verify-otp", { email: location.state?.email, otp: otpValue })
-          .then((response) => {
-            console.log("Otp Verification successful", response.data);
-          })
-          .catch((error) => {
-            console.error("There was an error verifying OTP!", error);
-          });
-        navigate("/");
+      await axios
+        .post("/auth/verify-otp", {
+          email: location.state?.email,
+          otp: otpValue,
+        })
+        .then((response) => {
+          console.log("Otp Verification successful", response.data.token);
+          toast.success("Onboarding Successful");
+          localStorage.setItem("token", response.data.token);
+          setToken(response.data.token);
+          console.log("token", token);
+        })
+        .catch((error) => {
+          console.error("There was an error verifying OTP!", error);
+        });
+      navigate("/");
     }
   };
 
-  const isComplete = otp.every(digit => digit !== "");
+  const isComplete = otp.every((digit) => digit !== "");
 
   return (
     <div className="min-h-screen flex items-center justify-center relative ">
@@ -96,7 +115,6 @@ const [otp, setOtp] = useState(["", "", "", "", "", ""]);
             <p className="text-sm text-gray-400 text-center mt-2">
               We've sent a 6-digit code to your Phone number/Email
               <br />
-              
             </p>
           </div>
 
@@ -175,7 +193,8 @@ const [otp, setOtp] = useState(["", "", "", "", "", ""]);
               <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z" />
             </svg>
             <p className="text-xs text-gray-600">
-              For your security, never share this code with anyone. Our team will never ask for your OTP.
+              For your security, never share this code with anyone. Our team
+              will never ask for your OTP.
             </p>
           </div>
         </div>

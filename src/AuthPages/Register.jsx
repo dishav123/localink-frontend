@@ -2,6 +2,7 @@ import { useState } from "react";
 import { useNavigate } from "react-router";
 import { assets } from "../assets/assets";
 import axios from "../api/axios";
+import { toast } from "react-toastify";
 
 function Register() {
   const navigate = useNavigate();
@@ -46,7 +47,9 @@ function Register() {
     }
     const phoneRegex = /^[9][6-9]\d{8}$/;
     if (!phoneRegex.test(phone)) {
-      setPhoneError("Please enter a valid Nepali mobile number (e.g., 9841234567)");
+      setPhoneError(
+        "Please enter a valid Nepali mobile number (e.g., 9841234567)",
+      );
       return false;
     }
     setPhoneError("");
@@ -77,9 +80,9 @@ function Register() {
     }
   };
 
-  const onSubmitHandler = async(e) => {
+  const onSubmitHandler = async (e) => {
     e.preventDefault();
-    
+
     const isUsernameValid = validateUsername(username);
     const isEmailValid = validateEmail(email);
     const isPhoneValid = validatePhone(contactNumber);
@@ -90,16 +93,22 @@ function Register() {
       phoneNum: contactNumber,
     };
 
-  
     if (isUsernameValid && isEmailValid && isPhoneValid) {
-        await axios.post("/auth/register",formData)
-    .then((response) => {
-      console.log("Registration successful:", response.data);
-    })
-    .catch((error) => {
-      console.error("There was an error registering!", error);
-    });
-      navigate("/otp-page", { state: formData });
+      try {
+        const response = await axios.post("/auth/register", formData);
+
+        console.log("Registration successful:", response.data);
+        toast.success("Navigating to OTP page....")
+
+        navigate("/otp-page", { state: formData });
+      } catch (error) {
+        console.error("There was an error registering!", error);
+
+        const errorMessage =
+          error.response?.data?.message || "Something went wrong";
+
+        toast.error(errorMessage);
+      }
     }
   };
 
@@ -134,7 +143,7 @@ function Register() {
               <div className="flex flex-col gap-1">
                 <div className="relative">
                   <input
-                    className={`w-full border ${usernameError ? 'border-red-500' : 'border-gray-300'} rounded-xl px-4 py-3 text-sm outline-none focus:ring-2 ${usernameError ? 'focus:ring-red-500/40' : 'focus:ring-[#e36e2a]/40'} peer placeholder:text-gray-400`}
+                    className={`w-full border ${usernameError ? "border-red-500" : "border-gray-300"} rounded-xl px-4 py-3 text-sm outline-none focus:ring-2 ${usernameError ? "focus:ring-red-500/40" : "focus:ring-[#e36e2a]/40"} peer placeholder:text-gray-400`}
                     placeholder={username ? "Eg: John Doe" : ""}
                     value={username}
                     onChange={handleUsernameChange}
@@ -145,8 +154,8 @@ function Register() {
                     htmlFor="username-input"
                     className={`absolute left-4 transition-all duration-200 pointer-events-none ${
                       username
-                        ? `text-xs -top-2 bg-white px-1 ${usernameError ? 'text-red-500' : 'text-[#e36e2a]'}`
-                        : `text-sm top-3 text-gray-500 peer-focus:text-xs peer-focus:-top-2 peer-focus:bg-white peer-focus:px-1 ${usernameError ? 'peer-focus:text-red-500' : 'peer-focus:text-[#e36e2a]'}`
+                        ? `text-xs -top-2 bg-white px-1 ${usernameError ? "text-red-500" : "text-[#e36e2a]"}`
+                        : `text-sm top-3 text-gray-500 peer-focus:text-xs peer-focus:-top-2 peer-focus:bg-white peer-focus:px-1 ${usernameError ? "peer-focus:text-red-500" : "peer-focus:text-[#e36e2a]"}`
                     }`}
                   >
                     Username
@@ -161,7 +170,7 @@ function Register() {
               <div className="flex flex-col gap-1">
                 <div className="relative">
                   <input
-                    className={`w-full border ${emailError ? 'border-red-500' : 'border-gray-300'} rounded-xl px-4 py-3 text-sm outline-none focus:ring-2 ${emailError ? 'focus:ring-red-500/40' : 'focus:ring-[#e36e2a]/40'} peer placeholder:text-gray-400`}
+                    className={`w-full border ${emailError ? "border-red-500" : "border-gray-300"} rounded-xl px-4 py-3 text-sm outline-none focus:ring-2 ${emailError ? "focus:ring-red-500/40" : "focus:ring-[#e36e2a]/40"} peer placeholder:text-gray-400`}
                     type="email"
                     placeholder={email ? "xxxx@gmail.com" : ""}
                     value={email}
@@ -173,8 +182,8 @@ function Register() {
                     htmlFor="email-input"
                     className={`absolute left-4 transition-all duration-200 pointer-events-none ${
                       email
-                        ? `text-xs -top-2 bg-white px-1 ${emailError ? 'text-red-500' : 'text-[#e36e2a]'}`
-                        : `text-sm top-3 text-gray-500 peer-focus:text-xs peer-focus:-top-2 peer-focus:bg-white peer-focus:px-1 ${emailError ? 'peer-focus:text-red-500' : 'peer-focus:text-[#e36e2a]'}`
+                        ? `text-xs -top-2 bg-white px-1 ${emailError ? "text-red-500" : "text-[#e36e2a]"}`
+                        : `text-sm top-3 text-gray-500 peer-focus:text-xs peer-focus:-top-2 peer-focus:bg-white peer-focus:px-1 ${emailError ? "peer-focus:text-red-500" : "peer-focus:text-[#e36e2a]"}`
                     }`}
                   >
                     Email Address
@@ -187,7 +196,9 @@ function Register() {
 
               {/* Phone */}
               <div className="flex flex-col gap-1">
-                <div className={`relative border ${phoneError ? 'border-red-500' : 'border-gray-300'} rounded-xl focus-within:ring-2 ${phoneError ? 'focus-within:ring-red-500/40' : 'focus-within:ring-[#e36e2a]/40'}`}>
+                <div
+                  className={`relative border ${phoneError ? "border-red-500" : "border-gray-300"} rounded-xl focus-within:ring-2 ${phoneError ? "focus-within:ring-red-500/40" : "focus-within:ring-[#e36e2a]/40"}`}
+                >
                   <div className="flex items-center px-3 py-3">
                     <span className="text-sm text-gray-500 mr-2 select-none">
                       +977
@@ -206,8 +217,8 @@ function Register() {
                       htmlFor="phone-input"
                       className={`absolute left-12 transition-all duration-200 pointer-events-none ${
                         contactNumber
-                          ? `text-xs -top-2 bg-white px-1 ${phoneError ? 'text-red-500' : 'text-[#e36e2a]'}`
-                          : `text-sm top-3 text-gray-500 peer-focus:text-xs peer-focus:-top-2 peer-focus:bg-white peer-focus:px-1 ${phoneError ? 'peer-focus:text-red-500' : 'peer-focus:text-[#e36e2a]'}`
+                          ? `text-xs -top-2 bg-white px-1 ${phoneError ? "text-red-500" : "text-[#e36e2a]"}`
+                          : `text-sm top-3 text-gray-500 peer-focus:text-xs peer-focus:-top-2 peer-focus:bg-white peer-focus:px-1 ${phoneError ? "peer-focus:text-red-500" : "peer-focus:text-[#e36e2a]"}`
                       }`}
                     >
                       Phone Number
@@ -233,7 +244,8 @@ function Register() {
                 href="/login"
                 className="text-sm text-[#e36e2a] hover:text-[#ef5f0c]"
               >
-                Already have an account? <span className="underline">Login</span>
+                Already have an account?{" "}
+                <span className="underline">Login</span>
               </a>
             </div>
 
@@ -241,8 +253,8 @@ function Register() {
             <p className="text-center text-xs text-gray-400 leading-relaxed">
               By creating an account, you agree to our{" "}
               <span className="underline cursor-pointer">Terms of Service</span>{" "}
-              and <span className="underline cursor-pointer">Privacy Policy</span>
-              .
+              and{" "}
+              <span className="underline cursor-pointer">Privacy Policy</span>.
             </p>
           </div>
         </div>

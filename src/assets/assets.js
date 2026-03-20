@@ -31,6 +31,10 @@ import verifiedIcon from "./Icons/verified_icon.svg";
 import InfoIcon from "./Icons/info_icon.svg";
 import LocationPinIcon from "./Icons/LocationPin.svg";
 import AboutPage2 from "./ServiceProviderImage/AboutPage2.jpg";
+import WorkerWomen from "./ServiceProviderImage/WorkerWomen.png"
+import WorkerWomen2 from "./ServiceProviderImage/WorkerWomen2.png"
+import WorkerMen from "./ServiceProviderImage/WorkerMen.png"
+import WorkerMen2 from "./ServiceProviderImage/WorkerMen2.png"
 import Email_icon from "./Icons/EmailC.svg";
 import Phone_icon from "./Icons/PhoneC.svg";
 import Home_icon from "./Icons/HomeC1.svg";
@@ -111,380 +115,288 @@ export const specialityData = [
 ];
 
 export const serviceProviders = [
+ 
+  // ── 1. Carpenter ──────────────────────────────────────────────────────────
   {
     _id: "sp1",
     name: "Ramesh Khadka",
-    image: Person1,
-    speciality: "Carpenter",
-    experience: "5 Years",
+    image: WorkerMen,
+    speciality: "Carpenter",           // matches specialityData exactly
+    yearsOfExperience: 5,
+    experience: [
+      {
+        title: "Senior Carpenter",
+        company: "WoodCraft Nepal",
+        years: 5,
+        desc: "Custom furniture and interior woodwork for residential and commercial clients.",
+      },
+    ],
     description:
-      "Experienced carpenter known for high-quality furniture work, modular kitchen installations, and custom woodcraft projects.",
+      "Experienced carpenter known for high-quality furniture work, modular kitchen installations, and custom woodcraft projects. Specializes in both residential and commercial interiors.",
     fees: 1500,
-    address: {
-      line1: "Pepsicola, Kathmandu",
-      line2: "Near Town Planning Chowk",
-    },
+    province: "Bagmati",
+    city: "Kathmandu",
+    municipality: "Pepsicola",
+    wardNo: "7",
     rating: 4.8,
     totalReviews: 8,
     completedProjects: 120,
-    skills: [
-      "Custom Furniture",
-      "Modular Kitchen Setup",
-      "Door & Window Frames",
-      "Office Interior Woodwork",
-    ],
-    phone: "98XXXXXXXX",
-    email: "******@gmail.com",
+    skills: ["Custom Furniture", "Modular Kitchen Setup", "Door & Window Frames", "Office Interior Woodwork"],
+    certifications: ["Certified Woodwork Technician"],
+    phone: 9800000001,
+    email: "ramesh.khadka@gmail.com",
     customerReviews: [
-      { name: "Sita Gurung", rating: 5, comment: "Excellent finishing and very professional." },
-      { name: "Mohan Shrestha", rating: 4.6, comment: "Delivered on time, great quality work." },
-      { name: "Anita Lama", rating: 4.8, comment: "Highly skilled carpenter." },
-      { name: "Bikash Rana", rating: 4.7, comment: "Very neat and clean work." },
-      { name: "Sunita Gurung", rating: 5, comment: "Loved the kitchen setup." },
-      { name: "Kiran Shrestha", rating: 4.5, comment: "Good communication and service." },
-      { name: "Pooja Maharjan", rating: 4.9, comment: "Strongly recommended." },
+      { name: "Sita Gurung",     rating: 5,   comment: "Excellent finishing and very professional." },
+      { name: "Mohan Shrestha",  rating: 4.6, comment: "Delivered on time, great quality work." },
+      { name: "Anita Lama",      rating: 4.8, comment: "Highly skilled carpenter." },
+      { name: "Bikash Rana",     rating: 4.7, comment: "Very neat and clean work." },
+      { name: "Sunita Gurung",   rating: 5,   comment: "Loved the kitchen setup." },
+      { name: "Kiran Shrestha",  rating: 4.5, comment: "Good communication and service." },
+      { name: "Pooja Maharjan",  rating: 4.9, comment: "Strongly recommended." },
       { name: "Ramesh Adhikari", rating: 4.6, comment: "Worth the money." },
     ],
+    slots_booked: {},
+    agreedToTerms: true,
+    agreedToPrivacy: true,
+    agreedToConduct: true,
   },
-
+ 
+  // ── 2. Electrician ────────────────────────────────────────────────────────
   {
     _id: "sp2",
-    name: "Suman Shrestha",
-    image: Person1,
-    speciality: "Electrician",
-    experience: "3 Years",
-    description:
-      "Certified electrician specializing in home wiring, inverter setup, and electrical safety.",
-    fees: 1000,
-    address: {
-      line1: "Suryabinayak, Bhaktapur",
-      line2: "Near CDO Office",
-    },
-    rating: 4.6,
-    totalReviews: 8,
-    completedProjects: 80,
-    skills: ["Home Wiring", "Inverter Setup", "MCB Repair", "Lighting Installation"],
-    emergencyAvailable: true,
-    emergencyFees: 1800,
-    contact: {
-      phone: "98XXXXXXXX",
-      email: "******@gmail.com",
-    },
-    customerReviews: [
-      { name: "Anil Karki", rating: 4.6, comment: "Wiring issue solved safely." },
-      { name: "Rina Thapa", rating: 4.7, comment: "Very polite and professional." },
-      { name: "Suresh BK", rating: 4.5, comment: "Quick troubleshooting." },
-      { name: "Manisha Rai", rating: 4.8, comment: "Highly knowledgeable electrician." },
-      { name: "Prakash Shah", rating: 4.4, comment: "Affordable and reliable." },
-      { name: "Nabin Gurung", rating: 4.6, comment: "Good safety practices." },
-      { name: "Bina Lama", rating: 4.7, comment: "Solved inverter problem easily." },
-      { name: "Kamal Thapa", rating: 4.5, comment: "Satisfied with service." },
+    name: "Sita Sharma",
+    image: WorkerWomen2,
+    speciality: "Electrician",         // matches specialityData exactly
+    yearsOfExperience: 8,
+    experience: [
+      {
+        title: "Senior Electrician",
+        company: "PowerFix Nepal",
+        years: 8,
+        desc: "Residential and commercial wiring, solar panel setup and maintenance.",
+      },
     ],
-    detailedDescription: {
-      overview:
-        "Suman Shrestha provides reliable and safe electrical solutions for residential buildings.",
-    },
+    description:
+      "Licensed electrician with expertise in wiring, circuit installations, and electrical safety inspections. Handles everything from basic repairs to full house rewiring.",
+    fees: 1200,
+    province: "Bagmati",
+    city: "Lalitpur",
+    municipality: "Pulchowk",
+    wardNo: "3",
+    rating: 4.6,
+    totalReviews: 5,
+    completedProjects: 95,
+    skills: ["Wiring", "Circuit Installation", "Safety Inspection", "Solar Setup"],
+    certifications: ["Licensed Electrician — Nepal Electricity Authority"],
+    phone: 9800000002,
+    email: "sita.sharma@gmail.com",
+    customerReviews: [
+      { name: "Deepak Thapa",  rating: 5,   comment: "Very professional and safe work." },
+      { name: "Nisha Karki",   rating: 4.5, comment: "Fixed our wiring issue quickly." },
+      { name: "Arun Bhandari", rating: 4.7, comment: "Reliable and knowledgeable." },
+      { name: "Mina Tamang",   rating: 4.3, comment: "Good service, fair price." },
+      { name: "Suresh Pandey", rating: 4.5, comment: "Would recommend to others." },
+    ],
+    slots_booked: {},
+    agreedToTerms: true,
+    agreedToPrivacy: true,
+    agreedToConduct: true,
   },
-
+ 
+  // ── 3. Plumber ────────────────────────────────────────────────────────────
   {
     _id: "sp3",
-    name: "Prakash Gurung",
-    image: Person1,
-    speciality: "Plumber",
-    experience: "6 Years",
-    description:
-      "Reliable plumber experienced in pipeline installation and leakage repair.",
-    fees: 800,
-    address: {
-      line1: "Lakeside, Pokhara",
-      line2: "Near Phewa Marga",
-    },
-    rating: 4.7,
-    totalReviews: 8,
-    completedProjects: 200,
-    skills: ["Pipeline Installation", "Leakage Repair", "Bathroom Fittings", "Water Tank Cleaning"],
-    emergencyAvailable: true,
-    emergencyFees: 1500,
-    contact: {
-      phone: "98XXXXXXXX",
-      email: "******@gmail.com",
-    },
-    customerReviews: [
-      { name: "Bikash Rana", rating: 4.8, comment: "Leakage fixed permanently." },
-      { name: "Sunita Gurung", rating: 4.6, comment: "Very fast service." },
-      { name: "Ramesh KC", rating: 4.7, comment: "Good plumbing knowledge." },
-      { name: "Nisha Thapa", rating: 4.8, comment: "Clean and durable fix." },
-      { name: "Arjun Lama", rating: 4.6, comment: "No more water issues." },
-      { name: "Dipesh Rai", rating: 4.7, comment: "Highly recommended plumber." },
-      { name: "Sanjay Shah", rating: 4.5, comment: "Affordable pricing." },
-      { name: "Puja Shrestha", rating: 4.8, comment: "Professional behavior." },
+    name: "Bikram Thapa",
+    image: WorkerMen,
+    speciality: "Plumber",             // matches specialityData exactly
+    yearsOfExperience: 6,
+    experience: [
+      {
+        title: "Plumber",
+        company: "AquaFix Nepal",
+        years: 6,
+        desc: "Pipe repair, leak detection, and bathroom fixture installations.",
+      },
     ],
-    detailedDescription: {
-      overview:
-        "Prakash Gurung has over 6 years of experience delivering long-term plumbing solutions.",
-    },
+    description:
+      "Skilled plumber specializing in residential pipe repair, leakage detection, and bathroom fixture installations. Available for both emergency and scheduled work.",
+    fees: 1000,
+    province: "Bagmati",
+    city: "Bhaktapur",
+    municipality: "Suryabinayak",
+    wardNo: "5",
+    rating: 4.5,
+    totalReviews: 6,
+    completedProjects: 80,
+    skills: ["Pipe Repair", "Leak Detection", "Bathroom Installation", "Water Tank Setup"],
+    certifications: ["Certified Plumbing Technician"],
+    phone: 9800000003,
+    email: "bikram.thapa@gmail.com",
+    customerReviews: [
+      { name: "Rajan Shrestha", rating: 4.5, comment: "Fixed the leak perfectly." },
+      { name: "Kamala Poudel",  rating: 4.6, comment: "Quick and efficient service." },
+      { name: "Hari Prasad",    rating: 4.4, comment: "Reasonable pricing." },
+      { name: "Gita Rai",       rating: 4.7, comment: "Very thorough work." },
+      { name: "Nabin KC",       rating: 4.3, comment: "Arrived on time." },
+      { name: "Pratima Oli",    rating: 4.5, comment: "Will hire again." },
+    ],
+    slots_booked: {},
+    agreedToTerms: true,
+    agreedToPrivacy: true,
+    agreedToConduct: true,
   },
-
+ 
+  // ── 4. Painter ────────────────────────────────────────────────────────────
   {
     _id: "sp4",
-    name: "Nirmala Lama",
-    image: Person1,
-    speciality: "House Cleaner",
-    experience: "4 Years",
-    description:
-      "Professional house cleaner specializing in deep cleaning and sanitization.",
-    fees: 1200,
-    address: {
-      line1: "Jawalakhel, Lalitpur",
-      line2: "Near Zoo Gate",
-    },
-    rating: 4.6,
-    totalReviews: 8,
-    completedProjects: 110,
-    skills: ["Deep Cleaning", "Bathroom Sanitization", "Kitchen Cleaning"],
-    emergencyAvailable: false,
-    emergencyFees: null,
-    contact: {
-      phone: "98XXXXXXXX",
-      email: "******@gmail.com",
-    },
-    customerReviews: [
-      { name: "Pooja Maharjan", rating: 4.7, comment: "House was spotless." },
-      { name: "Kiran Shrestha", rating: 4.5, comment: "Very punctual." },
-      { name: "Manita Rai", rating: 4.6, comment: "Hygienic cleaning." },
-      { name: "Rupesh Thapa", rating: 4.7, comment: "Good attention to detail." },
+    name: "Dipesh Maharjan",
+    image: WorkerMen2,
+    speciality: "Painter",             // matches specialityData exactly
+    yearsOfExperience: 7,
+    experience: [
+      {
+        title: "Lead Painter",
+        company: "ColorPro Nepal",
+        years: 4,
+        desc: "Interior and exterior painting for residential buildings.",
+      },
+      {
+        title: "Painter",
+        company: "Bright Walls Pvt. Ltd.",
+        years: 3,
+        desc: "Decorative painting and texture work.",
+      },
     ],
-    detailedDescription: {
-      overview:
-        "Nirmala Lama delivers thorough and hygienic house cleaning services.",
-    },
+    description:
+      "Professional painter with 7 years of experience in interior and exterior painting. Expert in texture finishes, waterproofing, and decorative wall art for homes and offices.",
+    fees: 900,
+    province: "Bagmati",
+    city: "Kathmandu",
+    municipality: "Kirtipur",
+    wardNo: "2",
+    rating: 4.7,
+    totalReviews: 7,
+    completedProjects: 145,
+    skills: ["Interior Painting", "Exterior Painting", "Texture Finish", "Waterproof Coating", "Wall Art"],
+    certifications: ["Asian Paints Certified Applicator"],
+    phone: 9800000004,
+    email: "dipesh.maharjan@gmail.com",
+    customerReviews: [
+      { name: "Sabina Shrestha",   rating: 5,   comment: "Flawless finish, very happy with the result." },
+      { name: "Rohit Bajracharya", rating: 4.7, comment: "Clean work and finished on time." },
+      { name: "Suman Panta",       rating: 4.6, comment: "Great texture work in our living room." },
+      { name: "Nilu Tamang",       rating: 4.8, comment: "Very professional and tidy." },
+      { name: "Prakash Karki",     rating: 4.5, comment: "Good quality paint job." },
+      { name: "Manjula Rai",       rating: 4.9, comment: "Exceeded expectations." },
+      { name: "Bikash Pandey",     rating: 4.6, comment: "Affordable and excellent quality." },
+    ],
+    slots_booked: {},
+    agreedToTerms: true,
+    agreedToPrivacy: true,
+    agreedToConduct: true,
   },
-
+ 
+  // ── 5. House Cleaner ──────────────────────────────────────────────────────
   {
     _id: "sp5",
-    name: "Dipesh Sunar",
-    image: Person1,
-    speciality: "Painter",
-    experience: "7 Years",
-    description:
-      "Expert painter skilled in interior and exterior wall painting.",
-    fees: 1800,
-    address: {
-      line1: "Koteshwor, Kathmandu",
-      line2: "Near Balkumari Bridge",
-    },
-    rating: 4.9,
-    totalReviews: 8,
-    completedProjects: 50,
-    skills: ["Interior Painting", "Exterior Painting", "Waterproofing", "Texture Design"],
-    emergencyAvailable: false,
-    emergencyFees: null,
-    contact: {
-      phone: "98XXXXXXXX",
-      email: "******@gmail.com",
-    },
-    customerReviews: [
-      { name: "Ramesh Adhikari", rating: 5, comment: "Perfect finish." },
-      { name: "Sujata Lama", rating: 4.8, comment: "Neat and clean work." },
-      { name: "Nabin Rai", rating: 4.9, comment: "Great color suggestions." },
-      { name: "Puja Thapa", rating: 4.7, comment: "On-time completion." },
+    name: "Sunita Rai",
+    image: WorkerWomen,
+    speciality: "House Cleaner",       // matches specialityData exactly
+    yearsOfExperience: 4,
+    experience: [
+      {
+        title: "House Cleaning Specialist",
+        company: "CleanHome Services",
+        years: 4,
+        desc: "Deep cleaning, post-construction cleaning, and regular maintenance cleaning.",
+      },
     ],
-    detailedDescription: {
-      overview:
-        "Dipesh Sunar has completed premium painting projects across Kathmandu Valley.",
-    },
+    description:
+      "Reliable and thorough house cleaning professional with 4 years of experience. Provides deep cleaning, regular maintenance, and post-renovation cleanup services for homes and offices.",
+    fees: 700,
+    province: "Bagmati",
+    city: "Lalitpur",
+    municipality: "Jawalakhel",
+    wardNo: "4",
+    rating: 4.9,
+    totalReviews: 12,
+    completedProjects: 200,
+    skills: ["Deep Cleaning", "Kitchen Cleaning", "Bathroom Sanitization", "Post-Construction Cleanup", "Regular Maintenance"],
+    certifications: ["Certified Hygiene & Sanitation Technician"],
+    phone: 9800000005,
+    email: "sunita.rai@gmail.com",
+    customerReviews: [
+      { name: "Priya Gurung",     rating: 5,   comment: "Spotless cleaning, highly recommend!" },
+      { name: "Anil Shrestha",    rating: 4.9, comment: "Very thorough and reliable." },
+      { name: "Mina Karmacharya", rating: 5,   comment: "Our home has never been this clean." },
+      { name: "Saroj Bhattarai",  rating: 4.8, comment: "Punctual and professional." },
+      { name: "Rita Hamal",       rating: 4.9, comment: "Amazing work, will book again." },
+      { name: "Kamal Dhakal",     rating: 4.7, comment: "Good attention to detail." },
+      { name: "Binita Subedi",    rating: 5,   comment: "Best cleaning service in the area." },
+      { name: "Nirmala Pokhrel",  rating: 4.8, comment: "Very satisfied with the service." },
+      { name: "Tulsi Bhandari",   rating: 4.9, comment: "Efficient and hardworking." },
+      { name: "Govind Adhikari",  rating: 5,   comment: "Will definitely hire again." },
+      { name: "Pushpa Neupane",   rating: 4.8, comment: "Great job on post-construction cleanup." },
+      { name: "Hira Lama",        rating: 4.9, comment: "Excellent service at a fair price." },
+    ],
+    slots_booked: {},
+    agreedToTerms: true,
+    agreedToPrivacy: true,
+    agreedToConduct: true,
   },
-
+ 
+  // ── 6. Technician ─────────────────────────────────────────────────────────
   {
     _id: "sp6",
-    name: "Sujan KC",
-    image: Person,
-    speciality: "Technician",
-    experience: "5 Years",
-    description:
-      "Skilled technician specializing in home appliance repair.",
-    fees: 900,
-    address: {
-      line1: "Kalikanagar, Butwal",
-      line2: "Near Red Cross Building",
-    },
-    rating: 4.6,
-    totalReviews: 8,
-    completedProjects: 500,
-    skills: ["Fridge Repair", "TV Repair", "Washing Machine", "Microwave Repair"],
-    emergencyAvailable: true,
-    emergencyFees: 1600,
-    contact: {
-      phone: "98XXXXXXXX",
-      email: "******@gmail.com",
-    },
-    customerReviews: [
-      { name: "Anita Sharma", rating: 4.7, comment: "Fridge repaired quickly." },
-      { name: "Bimal Thapa", rating: 4.6, comment: "Genuine spare parts." },
-      { name: "Suman Rai", rating: 4.5, comment: "Affordable pricing." },
-      { name: "Nisha KC", rating: 4.8, comment: "Very skilled technician." },
+    name: "Sagar Poudel",
+    image: WorkerMen2,
+    speciality: "Technician",          // matches specialityData exactly
+    yearsOfExperience: 9,
+    experience: [
+      {
+        title: "IT Support Engineer",
+        company: "TechNepal Pvt. Ltd.",
+        years: 5,
+        desc: "Hardware repair, networking, and software troubleshooting.",
+      },
+      {
+        title: "Computer Technician",
+        company: "DigiCare Services",
+        years: 4,
+        desc: "Laptop and desktop servicing, data recovery.",
+      },
     ],
-    detailedDescription: {
-      overview:
-        "Sujan KC has handled over 500 appliance repair cases with reliable outcomes.",
-    },
-  },
-
-  {
-    _id: "sp7",
-    name: "Kamal Adhikari",
-    image: Person,
-    speciality: "Carpenter",
-    experience: "4 Years",
     description:
-      "Specializes in doors, windows, and wooden partitions.",
-    fees: 1400,
-    address: {
-      line1: "Gongabu, Kathmandu",
-      line2: "Near Bus Park",
-    },
-    rating: 4.5,
-    totalReviews: 8,
-    completedProjects: 90,
-    skills: ["Door Installation", "Window Frames", "Wooden Flooring"],
-    emergencyAvailable: false,
-    emergencyFees: null,
-    contact: {
-      phone: "98XXXXXXXX",
-      email: "******@gmail.com",
-    },
+      "Experienced IT technician specializing in computer repair, network setup, CCTV installation, and software troubleshooting. Serves both home users and small businesses.",
+    fees: 1100,
+    province: "Bagmati",
+    city: "Kathmandu",
+    municipality: "New Baneshwor",
+    wardNo: "10",
+    rating: 4.7,
+    totalReviews: 9,
+    completedProjects: 310,
+    skills: ["Computer Repair", "Network Setup", "CCTV Installation", "Data Recovery", "Software Troubleshooting", "Printer Setup"],
+    certifications: ["CompTIA A+ Certified", "Cisco CCNA"],
+    phone: 9800000006,
+    email: "sagar.poudel@gmail.com",
     customerReviews: [
-      { name: "Nabin Thapa", rating: 4.6, comment: "Strong finishing." },
-      { name: "Rita Lama", rating: 4.5, comment: "Affordable carpenter." },
-      { name: "Bishal Rai", rating: 4.7, comment: "Good craftsmanship." },
-      { name: "Sita Gurung", rating: 4.4, comment: "Satisfied." },
-      { name: "Anil KC", rating: 4.5, comment: "On time delivery." },
-      { name: "Kiran Lama", rating: 4.6, comment: "Good quality." },
-      { name: "Puja Shah", rating: 4.5, comment: "Professional work." },
-      { name: "Dipesh Gurung", rating: 4.6, comment: "Recommended." },
+      { name: "Roshan Joshi",    rating: 5,   comment: "Fixed my laptop in no time, great service." },
+      { name: "Anjali Thapa",    rating: 4.6, comment: "Set up our office network perfectly." },
+      { name: "Manish Adhikari", rating: 4.7, comment: "Very knowledgeable and fast." },
+      { name: "Kavita Tamang",   rating: 4.8, comment: "Recovered all my important data, lifesaver!" },
+      { name: "Bijay Shrestha",  rating: 4.5, comment: "Good service at a fair price." },
+      { name: "Samjhana Rai",    rating: 4.9, comment: "CCTV installation was clean and professional." },
+      { name: "Dipak Karki",     rating: 4.7, comment: "Reliable and honest technician." },
+      { name: "Sunita Basnet",   rating: 4.6, comment: "Solved issues others couldn't fix." },
+      { name: "Niraj Bhusal",    rating: 4.8, comment: "Highly recommended for network setup." },
     ],
-    detailedDescription: {
-      overview:
-        "Kamal Adhikari focuses on affordable and durable carpentry solutions.",
-    },
+    slots_booked: {},
+    agreedToTerms: true,
+    agreedToPrivacy: true,
+    agreedToConduct: true,
   },
-
-  {
-    _id: "sp8",
-    name: "Laxmi Thapa",
-    image: Person,
-    speciality: "House Cleaner",
-    experience: "2 Years",
-    description:
-      "Focused on apartment cleaning and sofa shampoo services.",
-    fees: 1000,
-    address: {
-      line1: "Thamel, Kathmandu",
-      line2: "Near Garden of Dreams",
-    },
-    rating: 4.4,
-    totalReviews: 8,
-    completedProjects: 80,
-    skills: ["Apartment Cleaning", "Carpet Vacuuming", "Sofa Shampoo"],
-    emergencyAvailable: false,
-    emergencyFees: null,
-    contact: {
-      phone: "98XXXXXXXX",
-      email: "******@gmail.com",
-    },
-    customerReviews: [
-      { name: "Ramesh Shah", rating: 4.5, comment: "Friendly service." },
-      { name: "Anju Lama", rating: 4.4, comment: "Very detailed cleaning." },
-      { name: "Kiran Rai", rating: 4.3, comment: "Satisfied." },
-      { name: "Puja KC", rating: 4.6, comment: "Nice work." },
-      { name: "Suman Gurung", rating: 4.5, comment: "Good effort." },
-      { name: "Dipika Thapa", rating: 4.4, comment: "Will call again." },
-      { name: "Bishal Lama", rating: 4.5, comment: "Affordable." },
-      { name: "Rita Rai", rating: 4.3, comment: "Good service." },
-    ],
-    detailedDescription: {
-      overview:
-        "Laxmi Thapa provides affordable and friendly cleaning services.",
-    },
-  },
-
-  {
-    _id: "sp9",
-    name: "Arjun Chaudhary",
-    image: Person,
-    speciality: "Plumber",
-    experience: "3 Years",
-    description:
-      "Handles leakage repair and geyser fitting.",
-    fees: 700,
-    address: {
-      line1: "Hasanpur, Dhangadhi",
-      line2: "Near Park Area",
-    },
-    rating: 4.4,
-    totalReviews: 8,
-    completedProjects: 70,
-    skills: ["Leakage Repair", "Geyser Fitting", "Bathroom Pipeline"],
-    emergencyAvailable: true,
-    emergencyFees: 1300,
-    contact: {
-      phone: "98XXXXXXXX",
-      email: "******@gmail.com",
-    },
-    customerReviews: [
-      { name: "Suresh Yadav", rating: 4.4, comment: "Quick fix." },
-      { name: "Anita Chaudhary", rating: 4.5, comment: "Polite behavior." },
-      { name: "Ramesh Sah", rating: 4.3, comment: "Good plumber." },
-      { name: "Sunil Shah", rating: 4.4, comment: "Affordable." },
-      { name: "Bina Devi", rating: 4.5, comment: "Satisfied." },
-      { name: "Kamal Yadav", rating: 4.4, comment: "Professional." },
-      { name: "Sita Sah", rating: 4.5, comment: "Recommended." },
-      { name: "Nabin Sah", rating: 4.3, comment: "Good work." },
-    ],
-    detailedDescription: {
-      overview:
-        "Arjun Chaudhary provides reliable plumbing services in Dhangadhi.",
-    },
-  },
-
-  {
-    _id: "sp10",
-    name: "Puja Maharjan",
-    image: Person,
-    speciality: "Painter",
-    experience: "5 Years",
-    description:
-      "Expert in wall shine finish and creative room painting.",
-    fees: 1700,
-    address: {
-      line1: "Pulchowk, Lalitpur",
-      line2: "Near Engineering Campus",
-    },
-    rating: 4.8,
-    totalReviews: 8,
-    completedProjects: 65,
-    skills: ["Wall Shine Finish", "Kids Room Art", "Office Painting"],
-    emergencyAvailable: false,
-    emergencyFees: null,
-    contact: {
-      phone: "98XXXXXXXX",
-      email: "******@gmail.com",
-    },
-    customerReviews: [
-      { name: "Nisha Rai", rating: 4.9, comment: "Creative designs." },
-      { name: "Bishal Thapa", rating: 4.8, comment: "Loved the colors." },
-      { name: "Suman KC", rating: 4.7, comment: "Professional painter." },
-      { name: "Anju Lama", rating: 4.8, comment: "Very neat." },
-      { name: "Ramesh Shah", rating: 4.9, comment: "Excellent finish." },
-      { name: "Kiran Gurung", rating: 4.8, comment: "Worth it." },
-      { name: "Puja Rai", rating: 4.7, comment: "Good service." },
-      { name: "Dipesh Lama", rating: 4.8, comment: "Highly recommended." },
-    ],
-    detailedDescription: {
-      overview:
-        "Puja Maharjan specializes in creative and professional painting services.",
-    },
-  },
+ 
 ];
 
 
