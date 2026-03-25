@@ -1,13 +1,15 @@
-import { useEffect, useState } from "react";
+import { useContext, useEffect, useState } from "react";
+import { useNavigate } from "react-router";
+import { AppContext } from "../../context/AppContext";
 
-function BookingSlots({ onSlotSelect }) {
+function BookingSlots({ onSlotSelect, spData }) {
   const dayOfWeek = ["SUN", "MON", "TUE", "WED", "THU", "FRI", "SAT"];
-
   const [spSlots, setSpSlots] = useState([]);
   const [slotIndex, setSlotIndex] = useState(0);
   const [slotTime, setSlotTime] = useState("");
 
   const getAvailableSlots = async () => {
+    console.log(spData)
     setSpSlots([]);
 
     let today = new Date();
@@ -27,7 +29,7 @@ function BookingSlots({ onSlotSelect }) {
 
       if (today.getDate() === currentDate.getDate()) {
         currentDate.setHours(
-          currentDate.getHours() > 8 ? currentDate.getHours() + 1 : 8
+          currentDate.getHours() > 8 ? currentDate.getHours() + 1 : 8,
         );
         currentDate.setMinutes(currentDate.getMinutes() > 30 ? 30 : 0);
       } else {
@@ -37,14 +39,32 @@ function BookingSlots({ onSlotSelect }) {
       let timeSlots = [];
 
       while (currentDate < endDateTime) {
-        timeSlots.push({
-          datetime: new Date(currentDate),
-          time: currentDate.toLocaleTimeString([], {
-            hour: "2-digit",
-            minute: "2-digit",
-          }),
+        let formattedTime = currentDate.toLocaleTimeString([], {
+          hour: "2-digit",
+          minute: "2-digit",
         });
 
+        let day = currentDate.getDate();
+        let month = currentDate.getMonth() + 1;
+        let year = currentDate.getFullYear();
+        const slotDate = day + "/" + month + "/" + year;
+
+        const bookedTimes = (() => {
+          const sb = spData?.slots_booked;
+          if (!sb) return [];
+          if (typeof sb.get === "function") return sb.get(slotDate) || [];
+          if (typeof sb === "object") return sb[slotDate] || [];
+          return [];
+        })();
+
+        const isSlotAvailable = !bookedTimes.includes(formattedTime);
+
+        if (isSlotAvailable) {
+          timeSlots.push({
+            datetime: new Date(currentDate),
+            time: formattedTime,
+          });
+        }
         currentDate.setMinutes(currentDate.getMinutes() + 30);
       }
 
@@ -52,15 +72,21 @@ function BookingSlots({ onSlotSelect }) {
     }
   };
 
-  useEffect(() => {
+useEffect(() => {
+  if (spData) {
     getAvailableSlots();
-  }, []);
+  }
+}, [spData]);
 
   useEffect(() => {
     if (slotTime && onSlotSelect) {
+      const selected = spSlots[slotIndex]?.find(
+        (item) => item.time === slotTime,
+      );
+
       onSlotSelect({
-        date: spSlots[slotIndex]?.[0]?.datetime,
-        time: slotTime,
+        date: selected?.datetime,
+        time: selected?.time,
       });
     }
   }, [slotTime]);

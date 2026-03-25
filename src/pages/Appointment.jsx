@@ -4,15 +4,20 @@ import { AppContext } from "../context/AppContext";
 import { assets } from "../assets/assets";
 import RelatedSP from "../components/AppointmentPageComponent/RelatedSP";
 import BookingSlots from "../components/BookingComponent/BookingSlots.jsx";
+import { toast } from "react-toastify";
+import { LoginPromptModal } from "../components/MiniComponents/LoginPromptModal.jsx";
+import axios from "axios";
 
 function MyAppointment() {
   const navigate = useNavigate();
   const { povId } = useParams();
-  const { serviceProviders } = useContext(AppContext);
+  const { serviceProviders, getSPData, token, backendUrl } =useContext(AppContext);
 
   const [servicePovInfo, setServicePovInfo] = useState(null);
   const [isExpanded, setIsExpanded] = useState(false);
   const [showRatings, setShowRatings] = useState(false);
+  const [selectedSlot, setSelectedSlot] = useState(null);
+  const [showLoginPrompt, setShowLoginPrompt] = useState(false);
 
   useEffect(() => {
     const spInfo = serviceProviders.find((sp) => sp._id === povId);
@@ -28,8 +33,39 @@ function MyAppointment() {
     servicePovInfo.city,
     servicePovInfo.province,
   ]
-    .filter(Boolean)   // removes empty/undefined values
+    .filter(Boolean) // removes empty/undefined values
     .join(", ");
+
+  const bookAppointment = async () => {
+    if (!token) {
+      setShowLoginPrompt(true); // ← replaces toast + navigate
+      return;
+    }
+    try {
+      const date=selectedSlot.date
+      let day=date.getDate()
+      let month=date.getMonth()+1;
+      let year=date.getFullYear()
+      const slotDate=day+"/"+month+"/"+year
+      const slotTime=selectedSlot.time
+      const spId=povId
+
+      console.log(slotDate,slotTime,spId);
+      
+
+      const {data}=await axios.post(`${backendUrl}/user/book-appointment`,{spId,slotDate,slotTime},{headers:{token}})
+      if(data.success){
+        toast.success(data.message)
+        await getSPData()
+        navigate('/my-appointments')
+      }else{
+        toast.error(data.message)
+      }
+      
+    } catch (error) {
+      toast.error(error.message)
+    }
+  };
 
   return (
     <div className="max-w-7xl mx-auto px-4">
@@ -97,7 +133,9 @@ function MyAppointment() {
           {/* Fees */}
           <div className="flex gap-2 text-lg md:text-xl">
             <span className="text-gray-600">Hourly Fees:</span>
-            <span className="font-semibold">Rs. {servicePovInfo.fees} / hour</span>
+            <span className="font-semibold">
+              Rs. {servicePovInfo.fees} / hour
+            </span>
           </div>
 
           {/* Location — built from flat fields: municipality, city, province */}
@@ -118,11 +156,19 @@ function MyAppointment() {
       {/* Booking Slots */}
       <div className="sm:ml-80 sm:pl-4 mt-8">
         <BookingSlots
+          spData={servicePovInfo}
           onSlotSelect={(slot) => {
-            console.log("Selected Slot:", slot);
+            setSelectedSlot(slot);
           }}
         />
-        <button className="bg-[#e36e2a] text-white text-sm font-light px-14 py-3 rounded-full my-6 hover:bg-[#c35d22]">
+        <button
+          className="bg-[#e36e2a] text-white text-sm font-light px-14 py-3 rounded-full my-6 hover:bg-[#c35d22]"
+          onClick={() => {
+            selectedSlot
+              ? bookAppointment()
+              : toast.error("Please select date & time.");
+          }}
+        >
           Book An Appointment
         </button>
       </div>
@@ -134,7 +180,9 @@ function MyAppointment() {
             <button
               onClick={() => setShowRatings(false)}
               className={`pb-3 text-lg font-medium transition relative ${
-                !showRatings ? "text-gray-900" : "text-gray-500 hover:text-gray-700"
+                !showRatings
+                  ? "text-gray-900"
+                  : "text-gray-500 hover:text-gray-700"
               }`}
             >
               Description
@@ -145,7 +193,9 @@ function MyAppointment() {
             <button
               onClick={() => setShowRatings(true)}
               className={`pb-3 text-lg font-medium transition relative ${
-                showRatings ? "text-gray-900" : "text-gray-500 hover:text-gray-700"
+                showRatings
+                  ? "text-gray-900"
+                  : "text-gray-500 hover:text-gray-700"
               }`}
             >
               Ratings & Reviews
@@ -160,7 +210,6 @@ function MyAppointment() {
           {!showRatings ? (
             // ── DESCRIPTION TAB ──────────────────────────────────────────────
             <div className="space-y-8">
-
               {/* Skills & Expertise */}
               {servicePovInfo.skills?.length > 0 && (
                 <div>
@@ -205,7 +254,9 @@ function MyAppointment() {
                         </div>
                         <p className="text-sm text-[#e36e2a]">{exp.company}</p>
                         {exp.desc && (
-                          <p className="text-sm text-gray-600 mt-1">{exp.desc}</p>
+                          <p className="text-sm text-gray-600 mt-1">
+                            {exp.desc}
+                          </p>
                         )}
                       </div>
                     ))}
@@ -238,14 +289,23 @@ function MyAppointment() {
                   Service Highlights
                 </h3>
                 <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-
                   {/* Years of experience — was a string, now a number */}
                   <div className="flex items-start gap-3 bg-gray-50 rounded-lg px-4 py-4">
-                    <svg className="w-6 h-6 text-green-600 mt-0.5 flex-shrink-0" fill="currentColor" viewBox="0 0 20 20">
-                      <path fillRule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clipRule="evenodd" />
+                    <svg
+                      className="w-6 h-6 text-green-600 mt-0.5 flex-shrink-0"
+                      fill="currentColor"
+                      viewBox="0 0 20 20"
+                    >
+                      <path
+                        fillRule="evenodd"
+                        d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z"
+                        clipRule="evenodd"
+                      />
                     </svg>
                     <div>
-                      <p className="text-base font-medium text-gray-900">Experience</p>
+                      <p className="text-base font-medium text-gray-900">
+                        Experience
+                      </p>
                       <p className="text-sm text-gray-600 mt-1">
                         {servicePovInfo.yearsOfExperience
                           ? `${servicePovInfo.yearsOfExperience} Years`
@@ -256,11 +316,21 @@ function MyAppointment() {
 
                   {/* Completed Projects */}
                   <div className="flex items-start gap-3 bg-gray-50 rounded-lg px-4 py-4">
-                    <svg className="w-6 h-6 text-green-600 mt-0.5 flex-shrink-0" fill="currentColor" viewBox="0 0 20 20">
-                      <path fillRule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clipRule="evenodd" />
+                    <svg
+                      className="w-6 h-6 text-green-600 mt-0.5 flex-shrink-0"
+                      fill="currentColor"
+                      viewBox="0 0 20 20"
+                    >
+                      <path
+                        fillRule="evenodd"
+                        d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z"
+                        clipRule="evenodd"
+                      />
                     </svg>
                     <div>
-                      <p className="text-base font-medium text-gray-900">Completed Projects</p>
+                      <p className="text-base font-medium text-gray-900">
+                        Completed Projects
+                      </p>
                       <p className="text-sm text-gray-600 mt-1">
                         {servicePovInfo.completedProjects}+ Projects
                       </p>
@@ -269,28 +339,50 @@ function MyAppointment() {
 
                   {/* Customer Rating */}
                   <div className="flex items-start gap-3 bg-gray-50 rounded-lg px-4 py-4">
-                    <svg className="w-6 h-6 text-green-600 mt-0.5 flex-shrink-0" fill="currentColor" viewBox="0 0 20 20">
-                      <path fillRule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clipRule="evenodd" />
+                    <svg
+                      className="w-6 h-6 text-green-600 mt-0.5 flex-shrink-0"
+                      fill="currentColor"
+                      viewBox="0 0 20 20"
+                    >
+                      <path
+                        fillRule="evenodd"
+                        d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z"
+                        clipRule="evenodd"
+                      />
                     </svg>
                     <div>
-                      <p className="text-base font-medium text-gray-900">Customer Rating</p>
+                      <p className="text-base font-medium text-gray-900">
+                        Customer Rating
+                      </p>
                       <p className="text-sm text-gray-600 mt-1">
-                        {servicePovInfo.rating} ⭐ ({servicePovInfo.totalReviews} reviews)
+                        {servicePovInfo.rating} ⭐ (
+                        {servicePovInfo.totalReviews} reviews)
                       </p>
                     </div>
                   </div>
 
                   {/* Location highlight */}
                   <div className="flex items-start gap-3 bg-gray-50 rounded-lg px-4 py-4">
-                    <svg className="w-6 h-6 text-green-600 mt-0.5 flex-shrink-0" fill="currentColor" viewBox="0 0 20 20">
-                      <path fillRule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clipRule="evenodd" />
+                    <svg
+                      className="w-6 h-6 text-green-600 mt-0.5 flex-shrink-0"
+                      fill="currentColor"
+                      viewBox="0 0 20 20"
+                    >
+                      <path
+                        fillRule="evenodd"
+                        d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z"
+                        clipRule="evenodd"
+                      />
                     </svg>
                     <div>
-                      <p className="text-base font-medium text-gray-900">Service Area</p>
-                      <p className="text-sm text-gray-600 mt-1">{locationString}</p>
+                      <p className="text-base font-medium text-gray-900">
+                        Service Area
+                      </p>
+                      <p className="text-sm text-gray-600 mt-1">
+                        {locationString}
+                      </p>
                     </div>
                   </div>
-
                 </div>
               </div>
             </div>
@@ -330,14 +422,16 @@ function MyAppointment() {
                   {[5, 4, 3, 2, 1].map((star) => {
                     const reviews = servicePovInfo.customerReviews || [];
                     const count = reviews.filter(
-                      (r) => Math.floor(r.rating) === star
+                      (r) => Math.floor(r.rating) === star,
                     ).length;
                     const percentage =
                       reviews.length > 0 ? (count / reviews.length) * 100 : 0;
 
                     return (
                       <div key={star} className="flex items-center gap-4">
-                        <span className="text-base text-gray-600 w-8">{star}★</span>
+                        <span className="text-base text-gray-600 w-8">
+                          {star}★
+                        </span>
                         <div className="flex-1 h-3 bg-gray-200 rounded-full overflow-hidden">
                           <div
                             className="h-full bg-[#e36e2a] rounded-full transition-all"
@@ -401,6 +495,14 @@ function MyAppointment() {
           )}
         </div>
       </div>
+      <LoginPromptModal
+        isOpen={showLoginPrompt}
+        onClose={() => setShowLoginPrompt(false)}
+        onLogin={() => {
+          setShowLoginPrompt(false);
+          navigate("/login");
+        }}
+      />
 
       {/* Related service providers */}
       <RelatedSP spId={povId} speciality={servicePovInfo.speciality} />

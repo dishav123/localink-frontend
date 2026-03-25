@@ -10,7 +10,7 @@ function Navbar() {
   const [showDropdown, setShowDropdown] = useState(false);
   const dropdownRef = useRef(null);
 
-  const { token, setToken } = useContext(AppContext);
+  const { token, setToken, userData } = useContext(AppContext);
 
   const isLoggedIn = !!token;
 
@@ -77,12 +77,11 @@ function Navbar() {
         {/* Nav Items */}
         <nav>
           <ul className="flex items-start gap-6 font-medium text-[16px]">
-            {["/", "/serviceproviders", "/services", "/about", "/contact"].map(
+            {["/", "/serviceproviders", "/about", "/contact"].map(
               (path, i) => {
                 const labels = [
                   "HOME",
                   "SERVICE PROVIDERS",
-                  "SERVICES",
                   "ABOUT US",
                   "CONTACT",
                 ];
@@ -116,7 +115,9 @@ function Navbar() {
               >
                 <img
                   className="w-8 h-8 rounded-full border"
-                  src={assets.profile_pic}
+                  src={userData?.image
+                      ? `http://localhost:3000/${userData.image.replace(/\\/g, "/")}`
+                      : assets.profile_pic}
                   alt="Profile"
                 />
                 <img
@@ -197,12 +198,11 @@ function Navbar() {
       {/* ---------------- MOBILE MENU ---------------- */}
       {showMenu && (
         <nav className="md:hidden absolute top-16 left-0 w-full bg-white shadow-lg flex flex-col items-center py-6 gap-6 z-40">
-          {["/", "/serviceproviders", "/services", "/about", "/contact"].map(
+          {["/", "/serviceproviders", "/about", "/contact"].map(
             (path, i) => {
               const labels = [
                 "HOME",
                 "SERVICE PROVIDERS",
-                "SERVICES",
                 "ABOUT US",
                 "CONTACT",
               ];
