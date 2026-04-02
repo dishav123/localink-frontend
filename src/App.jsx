@@ -17,8 +17,6 @@ import AdminLogin from "./AuthPages/AdminLogin";
 import ProviderLogin from "./AuthPages/ProvidersLogin";
 import OtpPage from "./AuthPages/OtpPage";
 import ServiceProviderWizard from "./components/ServiceProviderWizardComponents/ServiceProviderWizard";
-import axios from "./api/axios";
-import { useEffect } from "react";
 import { ToastContainer, toast } from "react-toastify";
 
 export default function App() {
