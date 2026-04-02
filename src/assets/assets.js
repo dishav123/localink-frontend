@@ -4,6 +4,7 @@ import dropdownIcon from "./dropdown_icon.svg";
 import group_profiles from "./group_profiles.png";
 import arrowIcon from "./arrow_icon.svg";
 import headerImage from "./HeaderImage.png";
+import headerImageO from "./HeaderImage.jpg";
 import headerImage2 from "./HeaderImage2.png";
 import ElectricianSpec1 from "./ElectricianSpec1.svg";
 import PainterSpec1 from "./PainterSpec1.svg";
@@ -47,6 +48,8 @@ import SaveIcon from './Icons/SaveIcon.svg';
 import TechnicianSub1 from "./ServiceProviderImage/TechnicianSub1.png";
 import AdminIcon from "./Icons/AdminIcon.svg";
 import ProviderIcon from "./Icons/ProviderIcon.svg";
+import headerImage3 from "./HeaderNepImage.png"
+import headerImageBg from "./HeaderImageWBackground.png"
 
 export const assets = {
   logo,
@@ -85,6 +88,9 @@ export const assets = {
   SaveIcon,
   AdminIcon,
   ProviderIcon,
+  headerImage3,
+  headerImageBg,
+  headerImageO
 };
 
 export const specialityData = [
