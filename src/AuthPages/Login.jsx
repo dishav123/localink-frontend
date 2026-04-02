@@ -56,7 +56,17 @@ function Login() {
 
     if (phoneLogin) {
       if (validatePhone(contactNumber)) {
-        navigate("/otp-page");
+        try {
+          await axios.post("/auth/login-num", { phoneNum: contactNumber });
+        } catch (error) {
+          console.error("Login error:", error);
+        }
+        navigate("/otp-page", {
+          state: {
+            type: "phone",
+            value: contactNumber,
+          },
+        });
       }
     } else {
       if (validateEmail(email)) {
@@ -65,7 +75,12 @@ function Login() {
         } catch (error) {
           console.error("Login error:", error);
         }
-        navigate("/otp-page", { state: { email } });
+        navigate("/otp-page", {
+          state: {
+            type: "email",
+            value: email,
+          },
+        });
       }
     }
   };

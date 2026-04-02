@@ -10,8 +10,30 @@ export const AppContext = createContext();
 const AppContextProvider = (props) => {
   const backendUrl = import.meta.env.VITE_BACKEND_URL;
   const [serviceProviders, setServiceProviders] = useState([]);
-  const [userData,setUserData]=useState(false)
- const [token, setToken] = useState(() => localStorage.getItem("token"));
+  const [userData, setUserData] = useState(false);
+  const [token, setToken] = useState(() => getValidToken());
+
+  function getValidToken() {
+    const token = localStorage.getItem("token");
+
+    if (!token) return "";
+
+    try {
+      // JWT payload is the middle part, base64 encoded
+      const payload = JSON.parse(atob(token.split(".")[1])); //atob decodes base64 to string, then parse JSON
+      const isExpired = payload.exp * 1000 < Date.now(); // exp is in seconds, Date.now() in ms
+
+      if (isExpired) {
+        localStorage.removeItem("token"); // clear expired token immediately
+        return "";
+      }
+      return token;
+    } catch {
+      // Token is malformed
+      localStorage.removeItem("token");
+      return "";
+    }
+  }
 
   const getSPData = async () => {
     try {
@@ -26,18 +48,20 @@ const AppContextProvider = (props) => {
     }
   };
 
-  const loadUserProfileData=async()=>{
+  const loadUserProfileData = async () => {
     try {
-      const {data}=await axios.get(`${backendUrl}/auth/me`,{headers:{token}})
-      if(data){
-        setUserData(data.userData)
-      }else{
-        toast.error(data.message);
+      const { data } = await axios.get(`${backendUrl}/auth/me`, {
+        headers: { token },
+      });
+      if (data) {
+        setUserData(data.userData);
+      } else {
+        toast.error("Session Expired, Please Login!");
       }
     } catch (error) {
-      toast.error(error.message);
+      toast.error("Session Expired, Please Login!");
     }
-  }
+  };
 
   const value = {
     serviceProviders,
@@ -47,7 +71,7 @@ const AppContextProvider = (props) => {
     backendUrl,
     setUserData,
     userData,
-    loadUserProfileData
+    loadUserProfileData,
   };
 
   useEffect(() => {
@@ -55,10 +79,10 @@ const AppContextProvider = (props) => {
   }, []);
 
   useEffect(() => {
-    if(token){
-      loadUserProfileData()
-    } else{
-      setUserData(false)
+    if (token) {
+      loadUserProfileData();
+    } else {
+      setUserData(false);
     }
   }, [token]);
 

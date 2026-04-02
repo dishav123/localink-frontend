@@ -1,11 +1,10 @@
-import { useState, useRef, useEffect} from "react";
+import { useState, useRef, useEffect } from "react";
 import { useLocation, useNavigate } from "react-router";
 import axios from "../api/axios";
 import { assets } from "../assets/assets";
 import { useContext } from "react";
 import { AppContext } from "../context/AppContext";
 import { toast } from "react-toastify";
-
 
 function OtpPage() {
   const [otp, setOtp] = useState(["", "", "", "", "", ""]);
@@ -14,6 +13,9 @@ function OtpPage() {
   const navigate = useNavigate();
   const location = useLocation();
   const { token, setToken } = useContext(AppContext);
+  const { state } = location;
+  const type = state?.type;
+  const value = state?.value;
 
   useEffect(() => {
     if (token) {
@@ -67,24 +69,37 @@ function OtpPage() {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
+
     const otpValue = otp.join("");
+
     if (otpValue.length === 6) {
-      await axios
-        .post("/auth/verify-otp", {
-          email: location.state?.email,
+      try {
+        const payload = {
           otp: otpValue,
-        })
-        .then((response) => {
+        };
+
+        if (type === "email") payload.email = value;
+        if (type === "phone") payload.phoneNum = value;
+
+        if (type === "phone") {
+          const response = await axios.post("/auth/verify-otp-num", payload);
           console.log("Otp Verification successful", response.data.token);
           toast.success("Onboarding Successful");
           localStorage.setItem("token", response.data.token);
           setToken(response.data.token);
-          console.log("token", token);
-        })
-        .catch((error) => {
-          console.error("There was an error verifying OTP!", error);
-        });
-      navigate("/");
+          navigate("/");
+
+        } else {
+          const response = await axios.post("/auth/verify-otp", payload);
+          console.log("Otp Verification successful", response.data.token);
+          toast.success("Onboarding Successful");
+          localStorage.setItem("token", response.data.token);
+          setToken(response.data.token);
+          navigate("/");
+        }
+      } catch (error) {
+        console.error("There was an error verifying OTP!", error);
+      }
     }
   };
 
@@ -113,7 +128,7 @@ function OtpPage() {
               </span>
             </h1>
             <p className="text-sm text-gray-400 text-center mt-2">
-              We've sent a 6-digit code to your Phone number/Email
+              We've sent a 6-digit code to your whatsapp number/Email
               <br />
             </p>
           </div>

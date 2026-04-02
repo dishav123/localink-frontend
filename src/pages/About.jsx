@@ -3,6 +3,7 @@ import { assets } from "../assets/assets";
 function About() {
   return (
     <div className="px-4 md:px-10">
+
       {/* About Intro */}
       <div className="flex flex-col md:flex-row gap-10 items-start my-10">
         <div className="rounded-2xl overflow-hidden w-full md:w-1/5 hidden md:block">
@@ -10,6 +11,10 @@ function About() {
         </div>
 
         <div className="flex flex-col gap-y-5 text-gray-600 rounded-2xl px-2 md:px-5 py-3 text-sm md:text-base w-full md:w-4/5">
+        <div className="mb-4">
+          <h1 className="text-2xl sm:text-3xl font-semibold text-gray-900">About Us</h1>
+          <p className="text-gray-500 mt-1 text-sm">Building meaningful solutions that empower everyday users</p>
+        </div>
           <p>
             Loca-link is a web-based platform designed to modernize the way people
             find and book home service providers in Nepal.

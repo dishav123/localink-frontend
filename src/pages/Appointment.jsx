@@ -11,13 +11,17 @@ import axios from "axios";
 function MyAppointment() {
   const navigate = useNavigate();
   const { povId } = useParams();
-  const { serviceProviders, getSPData, token, backendUrl } =useContext(AppContext);
+  const { serviceProviders, getSPData, token, backendUrl } =
+    useContext(AppContext);
 
   const [servicePovInfo, setServicePovInfo] = useState(null);
   const [isExpanded, setIsExpanded] = useState(false);
   const [showRatings, setShowRatings] = useState(false);
   const [selectedSlot, setSelectedSlot] = useState(null);
   const [showLoginPrompt, setShowLoginPrompt] = useState(false);
+  const [reviewText, setReviewText] = useState("");
+  const [rating, setRating] = useState(0);
+  const [isSubmitting, setIsSubmitting] = useState(false);
 
   useEffect(() => {
     const spInfo = serviceProviders.find((sp) => sp._id === povId);
@@ -26,8 +30,23 @@ function MyAppointment() {
 
   if (!servicePovInfo) return null;
 
-  // Build a readable location string from flat address fields
-  // e.g. "Baneshwor, Kathmandu, Bagmati"
+  const reviews = servicePovInfo.customerReviews || [];
+  const totalReviews = reviews.length;
+
+  const avgRating =
+    totalReviews > 0
+      ? (reviews.reduce((acc, r) => acc + r.rating, 0) / totalReviews).toFixed(
+          1,
+        )
+      : 0;
+
+  const calculatedRating =
+    reviews.length > 0
+      ? (
+          reviews.reduce((acc, r) => acc + r.rating, 0) / reviews.length
+        ).toFixed(1)
+      : 0;
+
   const locationString = [
     servicePovInfo.municipality,
     servicePovInfo.city,
@@ -42,28 +61,78 @@ function MyAppointment() {
       return;
     }
     try {
-      const date=selectedSlot.date
-      let day=date.getDate()
-      let month=date.getMonth()+1;
-      let year=date.getFullYear()
-      const slotDate=day+"/"+month+"/"+year
-      const slotTime=selectedSlot.time
-      const spId=povId
+      const date = selectedSlot.date;
+      let day = date.getDate();
+      let month = date.getMonth() + 1;
+      let year = date.getFullYear();
+      const slotDate = day + "/" + month + "/" + year;
+      const slotTime = selectedSlot.time;
+      const spId = povId;
 
-      console.log(slotDate,slotTime,spId);
-      
+      console.log(slotDate, slotTime, spId);
 
-      const {data}=await axios.post(`${backendUrl}/user/book-appointment`,{spId,slotDate,slotTime},{headers:{token}})
-      if(data.success){
-        toast.success(data.message)
-        await getSPData()
-        navigate('/my-appointments')
-      }else{
-        toast.error(data.message)
+      const { data } = await axios.post(
+        `${backendUrl}/user/book-appointment`,
+        { spId, slotDate, slotTime },
+        { headers: { token } },
+      );
+      if (data.success) {
+        toast.success(data.message);
+        await getSPData();
+        navigate("/my-appointments");
+      } else {
+        toast.error(data.message);
       }
-      
     } catch (error) {
-      toast.error(error.message)
+      toast.error(error.message);
+    }
+  };
+
+  const hasUserReviewed = () => {
+    if (!token || !servicePovInfo?.customerReviews) return false;
+
+    return servicePovInfo.customerReviews.some(
+      (r) => r.userId === JSON.parse(atob(token.split(".")[1])).id,
+    );
+  };
+
+  const submitReview = async () => {
+    if (!token) {
+      setShowLoginPrompt(true);
+      return;
+    }
+
+    if (!rating || !reviewText.trim()) {
+      return toast.error("Please provide rating and review.");
+    }
+
+    try {
+      setIsSubmitting(true);
+
+      const { data } = await axios.post(
+        `${backendUrl}/user/review-rating`,
+        {
+          spId: povId,
+          rating,
+          review: reviewText,
+        },
+        { headers: { token } },
+      );
+
+      if (data.success) {
+        toast.success(data.message);
+
+        setReviewText("");
+        setRating(0);
+
+        await getSPData();
+      } else {
+        toast.error(data.message);
+      }
+    } catch (error) {
+      toast.error(error.message);
+    } finally {
+      setIsSubmitting(false);
     }
   };
 
@@ -355,8 +424,8 @@ function MyAppointment() {
                         Customer Rating
                       </p>
                       <p className="text-sm text-gray-600 mt-1">
-                        {servicePovInfo.rating} ⭐ (
-                        {servicePovInfo.totalReviews} reviews)
+                        {avgRating} ⭐ ({totalReviews} reviews)
+
                       </p>
                     </div>
                   </div>
@@ -394,8 +463,9 @@ function MyAppointment() {
                 {/* Overall rating number */}
                 <div className="md:w-1/3 text-center md:text-left">
                   <div className="text-7xl font-semibold text-gray-900">
-                    {servicePovInfo.rating}
+                    {calculatedRating}
                   </div>
+
                   <div className="flex items-center justify-center md:justify-start gap-1 mt-3">
                     {[...Array(5)].map((_, i) => (
                       <svg
@@ -413,7 +483,7 @@ function MyAppointment() {
                     ))}
                   </div>
                   <p className="text-base text-gray-500 mt-2">
-                    {servicePovInfo.totalReviews} Reviews
+                    {totalReviews} Reviews
                   </p>
                 </div>
 
@@ -446,6 +516,58 @@ function MyAppointment() {
                   })}
                 </div>
               </div>
+              {/* Add Review Section */}
+              {!hasUserReviewed() ? (
+                <div className="bg-gray-50 p-6 rounded-lg mb-8">
+                  <h3 className="text-xl font-semibold text-gray-900 mb-4">
+                    Add Your Review
+                  </h3>
+
+                  {/* Stars */}
+                  <div className="flex gap-2 mb-4">
+                    {[1, 2, 3, 4, 5].map((star) => (
+                      <svg
+                        key={star}
+                        onClick={() => !isSubmitting && setRating(star)}
+                        className={`w-7 h-7 ${
+                          isSubmitting ? "cursor-not-allowed" : "cursor-pointer"
+                        } ${star <= rating ? "text-[#e36e2a]" : "text-gray-300"}`}
+                        fill="currentColor"
+                        viewBox="0 0 20 20"
+                      >
+                        <path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z" />
+                      </svg>
+                    ))}
+                  </div>
+
+                  {/* Input */}
+                  <textarea
+                    value={reviewText}
+                    onChange={(e) => setReviewText(e.target.value)}
+                    disabled={isSubmitting}
+                    placeholder="Write your experience..."
+                    className="w-full border border-gray-300 rounded-lg p-3 text-sm focus:outline-none focus:ring-2 focus:ring-[#e36e2a]"
+                    rows={4}
+                  />
+
+                  {/* Button */}
+                  <button
+                    onClick={submitReview}
+                    disabled={isSubmitting}
+                    className={`mt-4 px-6 py-2 rounded-full text-sm text-white ${
+                      isSubmitting
+                        ? "bg-gray-400 cursor-not-allowed"
+                        : "bg-[#e36e2a] hover:bg-[#c35d22]"
+                    }`}
+                  >
+                    {isSubmitting ? "Submitting..." : "Submit Review"}
+                  </button>
+                </div>
+              ) : (
+                <div className="bg-green-50 p-4 rounded-lg mb-8 text-green-700 text-sm">
+                  You have already reviewed this service provider.
+                </div>
+              )}
 
               {/* Individual reviews */}
               <div>
