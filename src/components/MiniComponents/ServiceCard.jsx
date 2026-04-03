@@ -33,7 +33,9 @@ function ServiceCard({ image, name, speciality, status, id, rating = 0, totalRev
             {/* Image */}
             <div className="w-full flex justify-center items-center h-44 relative overflow-hidden" style={{ background: "#fff5ef" }}>
                 <img
-                    src={`${import.meta.env.VITE_API_URL.replace('/api', '')}/${image ? image.replace(/\\/g, "/") : ''}`}
+                    src={image 
+                      ? `${(import.meta.env.VITE_API_URL || "https://backend-localink.vercel.app/api").replace('/api', '')}/${image.replace(/\\/g, "/")}` 
+                      : "https://placehold.co/300x300"}
                     alt={name}
                     className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
                 />

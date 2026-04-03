@@ -154,7 +154,9 @@ function MyAppointment() {
           <div className="w-62 h-80">
             <img
               className="w-full h-full object-cover rounded-lg shadow-sm"
-              src={`${import.meta.env.VITE_API_URL.replace('/api', '')}/${servicePovInfo?.image ? servicePovInfo.image.replace(/\\/g, "/") : ''}`}
+              src={servicePovInfo?.image 
+                ? `${(import.meta.env.VITE_API_URL || "https://backend-localink.vercel.app/api").replace('/api', '')}/${servicePovInfo.image.replace(/\\/g, "/")}` 
+                : "https://placehold.co/300x400"}
               alt={servicePovInfo.name}
             />
           </div>

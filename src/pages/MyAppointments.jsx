@@ -128,7 +128,9 @@ function MyAppointments() {
                 <div className="flex-shrink-0">
                   <img
                     className="w-20 h-24 object-cover rounded-xl bg-orange-100"
-                    src={`${import.meta.env.VITE_API_URL.replace('/api', '')}/${sp?.image ? sp.image.replace(/\\/g, "/") : ''}`}
+                    src={sp?.image 
+                      ? `${(import.meta.env.VITE_API_URL || "https://backend-localink.vercel.app/api").replace('/api', '')}/${sp.image.replace(/\\/g, "/")}` 
+                      : "https://placehold.co/80x96"}
                     alt={sp.name}
                   />
                 </div>

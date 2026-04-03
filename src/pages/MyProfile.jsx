@@ -143,7 +143,7 @@ function MyProfile() {
   function getImageSrc() {
     if (imagePreview) return imagePreview; // show local preview if a new file is picked
     if (userData?.image)
-      return `${import.meta.env.VITE_API_URL.replace('/api', '')}/${userData.image.replace(/\\/g, "/")}`;
+      return `${(import.meta.env.VITE_API_URL || "https://backend-localink.vercel.app/api").replace('/api', '')}/${userData.image.replace(/\\/g, "/")}`;
     return assets.profile_pic;
   }
 
