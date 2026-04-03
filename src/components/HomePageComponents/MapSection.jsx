@@ -3,7 +3,8 @@ import axios from "axios";
 
 // ── Constants ────────────────────────────────────────────────────────────────
 const MAPS_API_KEY = import.meta.env.VITE_GOOGLE_MAPS_API_KEY;
-const BACKEND_URL  = import.meta.env.VITE_BACKEND_URL; 
+const BACKEND_URL  = import.meta.env.VITE_API_URL;
+const BASE_IMAGE_URL = import.meta.env.VITE_API_URL.replace('/api', ''); 
 
 const SPECIALITIES = [
   "All",
@@ -78,8 +79,7 @@ function ProviderCard({ provider, onClick, isActive }) {
     >
       {/* Avatar */}
       <img
-        src={`http://localhost:3000/${provider.image.replace(/\\/g, "/")}`}
-        //
+        src={`${BASE_IMAGE_URL}/${provider.image.replace(/\\/g, "/")}`}
         alt={provider.name}
         className="w-14 h-14 rounded-full object-cover shrink-0 border border-gray-100"
       />

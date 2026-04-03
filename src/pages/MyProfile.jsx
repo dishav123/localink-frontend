@@ -143,7 +143,7 @@ function MyProfile() {
   function getImageSrc() {
     if (imagePreview) return imagePreview; // show local preview if a new file is picked
     if (userData?.image)
-      return `http://localhost:3000/${userData.image.replace(/\\/g, "/")}`;
+      return `${import.meta.env.VITE_API_URL.replace('/api', '')}/${userData.image.replace(/\\\/g, "/")}`;
     return assets.profile_pic;
   }
 

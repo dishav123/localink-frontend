@@ -8,7 +8,7 @@ import { useEffect } from "react";
 export const AppContext = createContext();
 
 const AppContextProvider = (props) => {
-  const backendUrl = import.meta.env.VITE_BACKEND_URL;
+  const backendUrl = import.meta.env.VITE_API_URL;
   const [serviceProviders, setServiceProviders] = useState([]);
   const [userData, setUserData] = useState(false);
   const [token, setToken] = useState(() => getValidToken());

@@ -154,7 +154,7 @@ function MyAppointment() {
           <div className="w-62 h-80">
             <img
               className="w-full h-full object-cover rounded-lg shadow-sm"
-              src={`http://localhost:3000/${servicePovInfo.image.replace(/\\/g, "/")}`}
+              src={`${import.meta.env.VITE_API_URL.replace('/api', '')}/${servicePovInfo.image.replace(/\\\/g, "/")}`}
               alt={servicePovInfo.name}
             />
           </div>

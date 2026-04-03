@@ -92,7 +92,7 @@ function Navbar() {
                   className="w-8 h-8 rounded-full border"
                   src={
                     userData?.image
-                      ? `http://localhost:3000/${userData.image.replace(/\\/g, "/")}`
+                      ? `${import.meta.env.VITE_API_URL.replace('/api', '')}/${userData.image.replace(/\\\/g, "/")}`
                       : assets.profile_pic
                   }
                   alt="Profile"
@@ -225,7 +225,7 @@ function Navbar() {
                     className="w-9 h-9 rounded-full border border-neutral-200 object-cover"
                     src={
                       userData?.image
-                        ? `http://localhost:3000/${userData.image.replace(/\\/g, "/")}`
+                        ? `${import.meta.env.VITE_API_URL.replace('/api', '')}/${userData.image.replace(/\\\/g, "/")}`
                         : assets.profile_pic
                     }
                     alt="Profile"

@@ -1,7 +1,7 @@
 // ServiceProviderWizard/constants.js
 
 import { User, Briefcase, FileCheck, ScrollText } from "lucide-react";
- const API_BASE_URL="http://localhost:3000/api";
+ const API_BASE_URL = import.meta.env.VITE_API_URL;
 
 export const STEPS = [
   { id: 1, label: "Personal Details", icon: User, sub: "Identity & contact" },

@@ -33,7 +33,7 @@ function ServiceCard({ image, name, speciality, status, id, rating = 0, totalRev
             {/* Image */}
             <div className="w-full flex justify-center items-center h-44 relative overflow-hidden" style={{ background: "#fff5ef" }}>
                 <img
-                    src={`http://localhost:3000/${image.replace(/\\/g, "/")}`}
+                    src={`${import.meta.env.VITE_API_URL.replace('/api', '')}/${image.replace(/\\/g, "/")}`}
                     alt={name}
                     className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
                 />
