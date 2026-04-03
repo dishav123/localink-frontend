@@ -128,7 +128,7 @@ function MyAppointments() {
                 <div className="flex-shrink-0">
                   <img
                     className="w-20 h-24 object-cover rounded-xl bg-orange-100"
-                    src={`${import.meta.env.VITE_API_URL.replace('/api', '')}/${sp.image.replace(/\\/g, "/")}`}
+                    src={`${import.meta.env.VITE_API_URL.replace('/api', '')}/${sp?.image ? sp.image.replace(/\\/g, "/") : ''}`}
                     alt={sp.name}
                   />
                 </div>

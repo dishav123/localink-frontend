@@ -79,7 +79,7 @@ function ProviderCard({ provider, onClick, isActive }) {
     >
       {/* Avatar */}
       <img
-        src={`${BASE_IMAGE_URL}/${provider.image.replace(/\\/g, "/")}`}
+        src={`${BASE_IMAGE_URL}/${provider?.image ? provider.image.replace(/\\/g, "/") : ''}`}
         alt={provider.name}
         className="w-14 h-14 rounded-full object-cover shrink-0 border border-gray-100"
       />
