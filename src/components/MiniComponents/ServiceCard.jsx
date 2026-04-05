@@ -2,6 +2,7 @@ import { useNavigate } from "react-router";
 import { MapPin, Star, Wallet } from "lucide-react";
 
 function ServiceCard({ image, name, speciality, status, id, rating = 0, totalReviews = 0, city, fees }) {
+    console.log(city)
     const navigate = useNavigate();
 
     const handleCardClick = () => {

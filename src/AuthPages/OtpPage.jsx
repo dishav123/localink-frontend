@@ -5,6 +5,7 @@ import { assets } from "../assets/assets";
 import { useContext } from "react";
 import { AppContext } from "../context/AppContext";
 import { toast } from "react-toastify";
+import api from "../api/axios";
 
 function OtpPage() {
   const [otp, setOtp] = useState(["", "", "", "", "", ""]);
@@ -82,7 +83,7 @@ function OtpPage() {
         if (type === "phone") payload.phoneNum = value;
 
         if (type === "phone") {
-          const response = await axios.post("/auth/verify-otp-num", payload);
+          const response = await api.post("/auth/verify-otp-num", payload);
           console.log("Otp Verification successful", response.data.token);
           toast.success("Onboarding Successful");
           localStorage.setItem("token", response.data.token);
@@ -90,7 +91,7 @@ function OtpPage() {
           navigate("/");
 
         } else {
-          const response = await axios.post("/auth/verify-otp", payload);
+          const response = await api.post("/auth/verify-otp", payload);
           console.log("Otp Verification successful", response.data.token);
           toast.success("Onboarding Successful");
           localStorage.setItem("token", response.data.token);

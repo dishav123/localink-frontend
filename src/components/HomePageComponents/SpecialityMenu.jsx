@@ -69,7 +69,7 @@ function SpecialityMenu() {
         <div
           ref={scrollRef}
           onScroll={handleScroll}
-          className="flex gap-6 pt-5 w-full overflow-x-auto no-scrollbar scroll-smooth snap-x snap-mandatory"
+          className="flex items-center gap-6 pt-5 w-full overflow-x-auto no-scrollbar scroll-smooth snap-x snap-mandatory"
         >
           {specialityData.map((items, index) => (
             <Link

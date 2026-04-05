@@ -1,10 +1,10 @@
 import { useState } from "react";
 import { useNavigate } from "react-router";
 import { assets } from "../assets/assets";
-import axios from "../api/axios";
 import { useEffect } from "react";
 import { useContext } from "react";
 import { AppContext } from "../context/AppContext";
+import api from "../api/axios";
 
 function Login() {
   const [phoneLogin, setPhoneLogin] = useState(false);
@@ -57,7 +57,7 @@ function Login() {
     if (phoneLogin) {
       if (validatePhone(contactNumber)) {
         try {
-          await axios.post("/auth/login-num", { phoneNum: contactNumber });
+          await api.post("/auth/login-num", { phoneNum: contactNumber });
         } catch (error) {
           console.error("Login error:", error);
         }
@@ -71,7 +71,7 @@ function Login() {
     } else {
       if (validateEmail(email)) {
         try {
-          await axios.post("/auth/login", { email });
+          await api.post("/auth/login", { email });
         } catch (error) {
           console.error("Login error:", error);
         }
