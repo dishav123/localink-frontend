@@ -11,11 +11,11 @@ function Banner() {
           <p>Book Appointment</p>
           <p className="mt-4">With Trusted Service Providers</p>
         </div>
-        <button 
+        {/* <button 
         onClick={()=>navigate('/become-provider')}
         className="bg-white text-sm sm:text-base text-gray-600 px-8 py-3 rounded-full mt-6 hover:scale-105 transition-all">
           Become Service Provider
-        </button>
+        </button> */}
       </div>
 
       {/* Right Side */}

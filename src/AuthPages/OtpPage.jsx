@@ -100,6 +100,7 @@ function OtpPage() {
         }
       } catch (error) {
         console.error("There was an error verifying OTP!", error);
+        toast.error(error.response?.data?.message || "Failed to verify OTP. Please try again.");
       }
     }
   };

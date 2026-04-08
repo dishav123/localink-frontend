@@ -98,9 +98,14 @@ function Register() {
         const response = await axios.post("/auth/register", formData);
 
         console.log("Registration successful:", response.data);
-        toast.success("Navigating to OTP page....")
+        toast.success("Navigating to OTP page....");
 
-        navigate("/otp-page", { state: formData });
+        navigate("/otp-page", {
+          state: {
+            type: "email", 
+            value: email,
+          },
+        });
       } catch (error) {
         console.error("There was an error registering!", error);
 
