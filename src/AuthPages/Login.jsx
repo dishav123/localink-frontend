@@ -5,7 +5,7 @@ import { useEffect } from "react";
 import { useContext } from "react";
 import { AppContext } from "../context/AppContext";
 import api from "../api/axios";
-import { useLoader } from "../Hooks/UseLoader";
+import { useLoader } from "../Hooks/useLoader";
 import ServiceLoader from "../components/Loader/ServiceLoader"
 
 function Login() {
