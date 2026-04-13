@@ -5,6 +5,8 @@ import { useEffect } from "react";
 import { useContext } from "react";
 import { AppContext } from "../context/AppContext";
 import api from "../api/axios";
+import { useLoader } from "../Hooks/UseLoader";
+import ServiceLoader from "../components/Loader/ServiceLoader"
 
 function Login() {
   const [phoneLogin, setPhoneLogin] = useState(false);
@@ -14,6 +16,7 @@ function Login() {
   const [emailError, setEmailError] = useState("");
   const navigate = useNavigate();
   const { token, setToken } = useContext(AppContext);
+  const { loading, withLoader } = useLoader();
 
   useEffect(() => {
     if (token) {
@@ -56,31 +59,17 @@ function Login() {
 
     if (phoneLogin) {
       if (validatePhone(contactNumber)) {
-        try {
+        await withLoader(async () => {                     
           await api.post("/auth/login-num", { phoneNum: contactNumber });
-        } catch (error) {
-          console.error("Login error:", error);
-        }
-        navigate("/otp-page", {
-          state: {
-            type: "phone",
-            value: contactNumber,
-          },
         });
+        navigate("/otp-page", { state: { type: "phone", value: contactNumber } });
       }
     } else {
       if (validateEmail(email)) {
-        try {
+        await withLoader(async () => {                    
           await api.post("/auth/login", { email });
-        } catch (error) {
-          console.error("Login error:", error);
-        }
-        navigate("/otp-page", {
-          state: {
-            type: "email",
-            value: email,
-          },
         });
+        navigate("/otp-page", { state: { type: "email", value: email } });
       }
     }
   };
@@ -102,7 +91,9 @@ function Login() {
   };
 
   return (
+
     <form onSubmit={onSubmitHandler}>
+      
       <div className="min-h-screen flex items-center justify-center relative">
         {/* Top-left back button */}
         <button
@@ -114,7 +105,8 @@ function Login() {
           <img className="w-8" src={assets.BackArrow} alt="" />
         </button>
 
-        <div className="w-full max-w-md bg-white rounded-3xl px-8 py-10">
+        <div className="relative w-full max-w-md bg-white rounded-3xl px-8 py-10">
+          {loading && <ServiceLoader message="Directing you to the OTP page..." />}
           <div className="flex flex-col items-center gap-4">
             {/* Header */}
             <div className="flex flex-col items-center gap-2">

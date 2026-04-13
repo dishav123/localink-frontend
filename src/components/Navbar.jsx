@@ -3,11 +3,13 @@ import { assets } from "../assets/assets";
 import { useState, useRef, useEffect, useContext } from "react";
 import axios from "../api/axios";
 import { AppContext } from "../context/AppContext";
+import LogoutConfirmDialog from "./MiniComponents/LogoutConfirmDialogue";
 
 function Navbar() {
   const navigate = useNavigate();
   const [showMenu, setShowMenu] = useState(false);
   const [showDropdown, setShowDropdown] = useState(false);
+  const [showLogoutDialog, setShowLogoutDialog] = useState(false);
   const dropdownRef = useRef(null);
 
   const { token, setToken, userData } = useContext(AppContext);
@@ -40,6 +42,7 @@ function Navbar() {
       localStorage.removeItem("token");
       setShowDropdown(false);
       setShowMenu(false);
+      setShowLogoutDialog(false); 
       navigate("/");
     } catch (err) {
       console.log("Logout error", err);
@@ -51,6 +54,12 @@ function Navbar() {
 
   return (
     <div className="relative">
+      {showLogoutDialog && (
+        <LogoutConfirmDialog
+          onConfirm={handleLogout}
+          onCancel={() => setShowLogoutDialog(false)}
+        />
+      )}
       {/* ---------------- Desktop Navbar ---------------- */}
       <div className="flex items-center justify-between text-sm py-3 mb-3 backdrop-blur-xl hidden md:flex relative z-50">
         <img
@@ -120,7 +129,7 @@ function Navbar() {
                       MY APPOINTMENTS
                     </button>
                     <button
-                      onClick={handleLogout}
+                      onClick={() => setShowLogoutDialog(true)}
                       className="text-left px-4 py-2 hover:bg-white rounded"
                     >
                       LOGOUT
@@ -259,7 +268,7 @@ function Navbar() {
                 </button>
 
                 <button
-                  onClick={handleLogout}
+                  onClick={() => { setShowMenu(false); setShowLogoutDialog(true); }}
                   className="flex items-center gap-3 w-full px-4 py-3 rounded-xl text-sm font-medium text-red-500 hover:bg-red-50 transition-all duration-150 text-left mt-1"
                 >
                   <svg className="w-4 h-4 flex-shrink-0" fill="none" stroke="currentColor" strokeWidth={2} viewBox="0 0 24 24">
