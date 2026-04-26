@@ -6,6 +6,8 @@ import { useContext } from "react";
 import { AppContext } from "../context/AppContext";
 import { toast } from "react-toastify";
 import api from "../api/axios";
+import { useLoader } from "../Hooks/useLoader";
+import ServiceLoader from "../components/Loader/ServiceLoader";
 
 function OtpPage() {
   const [otp, setOtp] = useState(["", "", "", "", "", ""]);
@@ -14,6 +16,7 @@ function OtpPage() {
   const navigate = useNavigate();
   const location = useLocation();
   const { token, setToken } = useContext(AppContext);
+  const { loading, withLoader } = useLoader();
   const { state } = location;
   const type = state?.type;
   const value = state?.value;
@@ -73,36 +76,40 @@ function OtpPage() {
 
     const otpValue = otp.join("");
 
-    if (otpValue.length === 6) {
-      try {
-        const payload = {
-          otp: otpValue,
-        };
-
-        if (type === "email") payload.email = value;
-        if (type === "phone") payload.phoneNum = value;
-
-        if (type === "phone") {
-          const response = await api.post("/auth/verify-otp-num", payload);
-          console.log("Otp Verification successful", response.data.token);
-          toast.success("Onboarding Successful");
-          localStorage.setItem("token", response.data.token);
-          setToken(response.data.token);
-          navigate("/");
-
-        } else {
-          const response = await api.post("/auth/verify-otp", payload);
-          console.log("Otp Verification successful", response.data.token);
-          toast.success("Onboarding Successful");
-          localStorage.setItem("token", response.data.token);
-          setToken(response.data.token);
-          navigate("/");
-        }
-      } catch (error) {
-        console.error("There was an error verifying OTP!", error);
-        toast.error(error.response?.data?.message || "Failed to verify OTP. Please try again.");
-      }
+    if (otpValue.length !== 6) {
+      toast.error("Please enter a valid 6-digit OTP");
+      return;
     }
+
+    const payload = {
+      otp: otpValue,
+      ...(type === "email" && { email: value }),
+      ...(type === "phone" && { phoneNum: value }),
+    };
+
+    const endpoint =
+      type === "phone" ? "/auth/verify-otp-num" : "/auth/verify-otp";
+
+    await withLoader(async () => {
+      try {
+        const response = await api.post(endpoint, payload);
+
+        console.log("Otp Verification successful", response.data.token);
+        toast.success("Welcome to Localink!");
+
+        localStorage.setItem("token", response.data.token);
+        setToken(response.data.token);
+
+        navigate("/");
+      } catch (error) {
+        console.error("OTP Verification failed:", error);
+
+        toast.error(
+          error.response?.data?.message ||
+            "Failed to verify OTP. Please try again.",
+        );
+      }
+    });
   };
 
   const isComplete = otp.every((digit) => digit !== "");
@@ -118,7 +125,9 @@ function OtpPage() {
         <img className="w-8" src={assets.BackArrow} alt="" />
       </button>
 
-      <div className="w-full max-w-md bg-white rounded-3xl px-8 py-10 ">
+
+      <div className="relative w-full max-w-md bg-white rounded-3xl px-8 py-10 ">
+        {loading && <ServiceLoader message="Forwarding to Home Page... " />}
         <div className="flex flex-col items-center gap-6">
           {/* Header */}
           <div className="flex flex-col items-center gap-2">

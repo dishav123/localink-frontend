@@ -6,7 +6,8 @@ import { useContext } from "react";
 import { AppContext } from "../context/AppContext";
 import api from "../api/axios";
 import { useLoader } from "../Hooks/useLoader";
-import ServiceLoader from "../components/Loader/ServiceLoader"
+import ServiceLoader from "../components/Loader/ServiceLoader";
+import { toast } from "react-toastify";
 
 function Login() {
   const [phoneLogin, setPhoneLogin] = useState(false);
@@ -56,21 +57,28 @@ function Login() {
 
   const onSubmitHandler = async (e) => {
     e.preventDefault();
-
-    if (phoneLogin) {
-      if (validatePhone(contactNumber)) {
-        await withLoader(async () => {                     
-          await api.post("/auth/login-num", { phoneNum: contactNumber });
-        });
-        navigate("/otp-page", { state: { type: "phone", value: contactNumber } });
+    try {
+      if (phoneLogin) {
+        if (validatePhone(contactNumber)) {
+          await withLoader(async () => {
+            const response = await api.post("/auth/login-num", {
+              phoneNum: contactNumber,
+            });
+          });
+          navigate("/otp-page", {
+            state: { type: "phone", value: contactNumber },
+          });
+        }
+      } else {
+        if (validateEmail(email)) {
+          await withLoader(async () => {
+            const response = await api.post("/auth/login", { email });
+          });
+          navigate("/otp-page", { state: { type: "email", value: email } });
+        }
       }
-    } else {
-      if (validateEmail(email)) {
-        await withLoader(async () => {                    
-          await api.post("/auth/login", { email });
-        });
-        navigate("/otp-page", { state: { type: "email", value: email } });
-      }
+    } catch (error) {
+      toast.error(error.response?.data?.message || "Login failed. Please try again.");
     }
   };
 
@@ -91,9 +99,7 @@ function Login() {
   };
 
   return (
-
     <form onSubmit={onSubmitHandler}>
-      
       <div className="min-h-screen flex items-center justify-center relative">
         {/* Top-left back button */}
         <button
@@ -106,7 +112,9 @@ function Login() {
         </button>
 
         <div className="relative w-full max-w-md bg-white rounded-3xl px-8 py-10">
-          {loading && <ServiceLoader message="Directing you to the OTP page..." />}
+          {loading && (
+            <ServiceLoader message="Directing you to the OTP page..." />
+          )}
           <div className="flex flex-col items-center gap-4">
             {/* Header */}
             <div className="flex flex-col items-center gap-2">

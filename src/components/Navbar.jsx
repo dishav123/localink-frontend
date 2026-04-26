@@ -42,7 +42,7 @@ function Navbar() {
       localStorage.removeItem("token");
       setShowDropdown(false);
       setShowMenu(false);
-      setShowLogoutDialog(false); 
+      setShowLogoutDialog(false);
       navigate("/");
     } catch (err) {
       console.log("Logout error", err);
@@ -78,7 +78,9 @@ function Navbar() {
               <NavLink
                 key={i}
                 to={path}
-                className={({ isActive }) => (isActive ? "active group" : "group")}
+                className={({ isActive }) =>
+                  isActive ? "active group" : "group"
+                }
               >
                 <li className="py-1 hover:text-gray-600 transition-colors duration-200">
                   {navLabels[i]}
@@ -101,7 +103,7 @@ function Navbar() {
                   className="w-8 h-8 rounded-full border"
                   src={
                     userData?.image
-                      ? `${(import.meta.env.VITE_API_URL || "https://backend-localink.vercel.app/api").replace('/api', '')}/${userData.image.replace(/\\/g, "/")}`
+                      ? `${(import.meta.env.VITE_API_URL || "https://backend-localink.vercel.app/api").replace("/api", "")}/${userData.image.replace(/\\/g, "/")}`
                       : assets.profile_pic
                   }
                   alt="Profile"
@@ -115,25 +117,92 @@ function Navbar() {
 
               {showDropdown && (
                 <div className="absolute top-full right-0 mt-2 z-[100]">
-                  <div className="min-w-48 bg-stone-100 rounded shadow-lg flex flex-col gap-1 p-2">
-                    <button
-                      onClick={() => handleNavigation("/my-profile")}
-                      className="text-left px-4 py-2 hover:bg-white rounded"
-                    >
-                      MY PROFILE
-                    </button>
-                    <button
-                      onClick={() => handleNavigation("/my-appointments")}
-                      className="text-left px-4 py-2 hover:bg-white rounded"
-                    >
-                      MY APPOINTMENTS
-                    </button>
-                    <button
-                      onClick={() => setShowLogoutDialog(true)}
-                      className="text-left px-4 py-2 hover:bg-white rounded"
-                    >
-                      LOGOUT
-                    </button>
+                  <div className="w-52 bg-white border border-black/[0.07] rounded-2xl overflow-hidden shadow-lg shadow-black/[0.06]">
+                    {/* User info header */}
+                    <div className="flex items-center gap-2.5 px-3.5 py-3 border-b border-gray-100">
+                      <img
+                        className="w-8 h-8 rounded-full object-cover flex-shrink-0"
+                        src={
+                          userData?.image
+                            ? `${(import.meta.env.VITE_API_URL || "https://backend-localink.vercel.app/api").replace("/api", "")}/${userData.image.replace(/\\/g, "/")}`
+                            : assets.profile_pic
+                        }
+                        alt="Profile"
+                      />
+                      <div className="min-w-0">
+                        <p className="text-[13px] font-medium text-gray-800 truncate leading-tight">
+                          {userData?.name || "My Account"}
+                        </p>
+                        <p className="text-[11px] text-gray-400 truncate">
+                          {userData?.email || ""}
+                        </p>
+                      </div>
+                    </div>
+
+                    {/* Menu items */}
+                    <div className="p-1.5 flex flex-col gap-px">
+                      <button
+                        onClick={() => handleNavigation("/my-profile")}
+                        className="flex items-center gap-2.5 w-full px-2.5 py-2 rounded-xl text-[13px] text-gray-600 hover:bg-orange-50 hover:text-[#e36e2a] transition-colors duration-150 text-left group"
+                      >
+                        <svg
+                          className="w-[15px] h-[15px] text-gray-300 group-hover:text-[#e36e2a] transition-colors flex-shrink-0"
+                          fill="none"
+                          viewBox="0 0 24 24"
+                          stroke="currentColor"
+                          strokeWidth={1.8}
+                        >
+                          <path
+                            strokeLinecap="round"
+                            strokeLinejoin="round"
+                            d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z"
+                          />
+                        </svg>
+                        My profile
+                      </button>
+
+                      <button
+                        onClick={() => handleNavigation("/my-appointments")}
+                        className="flex items-center gap-2.5 w-full px-2.5 py-2 rounded-xl text-[13px] text-gray-600 hover:bg-orange-50 hover:text-[#e36e2a] transition-colors duration-150 text-left group"
+                      >
+                        <svg
+                          className="w-[15px] h-[15px] text-gray-300 group-hover:text-[#e36e2a] transition-colors flex-shrink-0"
+                          fill="none"
+                          viewBox="0 0 24 24"
+                          stroke="currentColor"
+                          strokeWidth={1.8}
+                        >
+                          <rect x="3" y="4" width="18" height="18" rx="2" />
+                          <line x1="16" y1="2" x2="16" y2="6" />
+                          <line x1="8" y1="2" x2="8" y2="6" />
+                          <line x1="3" y1="10" x2="21" y2="10" />
+                        </svg>
+                        My appointments
+                      </button>
+
+                      {/* Divider */}
+                      <div className="h-px bg-gray-100 my-1 mx-1" />
+
+                      <button
+                        onClick={() => setShowLogoutDialog(true)}
+                        className="flex items-center gap-2.5 w-full px-2.5 py-2 rounded-xl text-[13px] text-red-500 hover:bg-red-50 hover:text-red-600 transition-colors duration-150 text-left"
+                      >
+                        <svg
+                          className="w-[15px] h-[15px] flex-shrink-0"
+                          fill="none"
+                          viewBox="0 0 24 24"
+                          stroke="currentColor"
+                          strokeWidth={1.8}
+                        >
+                          <path
+                            strokeLinecap="round"
+                            strokeLinejoin="round"
+                            d="M17 16l4-4m0 0l-4-4m4 4H7m6 4v1a3 3 0 01-3 3H6a3 3 0 01-3-3V7a3 3 0 013-3h4a3 3 0 013 3v1"
+                          />
+                        </svg>
+                        Logout
+                      </button>
+                    </div>
                   </div>
                 </div>
               )}
@@ -191,7 +260,6 @@ function Navbar() {
         }`}
       >
         <div className="mx-3 bg-white rounded-2xl shadow-xl border border-neutral-100 overflow-hidden">
-
           {/* Nav links */}
           <div className="px-3 pt-3 pb-2 flex flex-col gap-1">
             {navLinks.map((path, i) => (
@@ -234,7 +302,7 @@ function Navbar() {
                     className="w-9 h-9 rounded-full border border-neutral-200 object-cover"
                     src={
                       userData?.image
-                        ? `${(import.meta.env.VITE_API_URL || "https://backend-localink.vercel.app/api").replace('/api', '')}/${userData.image.replace(/\\/g, "/")}`
+                        ? `${(import.meta.env.VITE_API_URL || "https://backend-localink.vercel.app/api").replace("/api", "")}/${userData.image.replace(/\\/g, "/")}`
                         : assets.profile_pic
                     }
                     alt="Profile"
@@ -243,36 +311,76 @@ function Navbar() {
                     <p className="text-sm font-semibold text-neutral-800 truncate">
                       {userData?.name || "My Account"}
                     </p>
-                    <p className="text-xs text-neutral-400 truncate">{userData?.email || ""}</p>
+                    <p className="text-xs text-neutral-400 truncate">
+                      {userData?.email || ""}
+                    </p>
                   </div>
                 </div>
 
                 <button
-                  onClick={() => { navigate("/my-profile"); setShowMenu(false); }}
+                  onClick={() => {
+                    navigate("/my-profile");
+                    setShowMenu(false);
+                  }}
                   className="flex items-center gap-3 w-full px-4 py-3 rounded-xl text-sm font-medium text-neutral-700 hover:bg-neutral-50 hover:text-[#F3752B] transition-all duration-150 text-left"
                 >
-                  <svg className="w-4 h-4 text-neutral-400 flex-shrink-0" fill="none" stroke="currentColor" strokeWidth={2} viewBox="0 0 24 24">
-                    <path strokeLinecap="round" strokeLinejoin="round" d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z" />
+                  <svg
+                    className="w-4 h-4 text-neutral-400 flex-shrink-0"
+                    fill="none"
+                    stroke="currentColor"
+                    strokeWidth={2}
+                    viewBox="0 0 24 24"
+                  >
+                    <path
+                      strokeLinecap="round"
+                      strokeLinejoin="round"
+                      d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z"
+                    />
                   </svg>
                   My Profile
                 </button>
 
                 <button
-                  onClick={() => { navigate("/my-appointments"); setShowMenu(false); }}
+                  onClick={() => {
+                    navigate("/my-appointments");
+                    setShowMenu(false);
+                  }}
                   className="flex items-center gap-3 w-full px-4 py-3 rounded-xl text-sm font-medium text-neutral-700 hover:bg-neutral-50 hover:text-[#F3752B] transition-all duration-150 text-left"
                 >
-                  <svg className="w-4 h-4 text-neutral-400 flex-shrink-0" fill="none" stroke="currentColor" strokeWidth={2} viewBox="0 0 24 24">
-                    <rect x="3" y="4" width="18" height="18" rx="2" /><line x1="16" y1="2" x2="16" y2="6" /><line x1="8" y1="2" x2="8" y2="6" /><line x1="3" y1="10" x2="21" y2="10" />
+                  <svg
+                    className="w-4 h-4 text-neutral-400 flex-shrink-0"
+                    fill="none"
+                    stroke="currentColor"
+                    strokeWidth={2}
+                    viewBox="0 0 24 24"
+                  >
+                    <rect x="3" y="4" width="18" height="18" rx="2" />
+                    <line x1="16" y1="2" x2="16" y2="6" />
+                    <line x1="8" y1="2" x2="8" y2="6" />
+                    <line x1="3" y1="10" x2="21" y2="10" />
                   </svg>
                   My Appointments
                 </button>
 
                 <button
-                  onClick={() => { setShowMenu(false); setShowLogoutDialog(true); }}
+                  onClick={() => {
+                    setShowMenu(false);
+                    setShowLogoutDialog(true);
+                  }}
                   className="flex items-center gap-3 w-full px-4 py-3 rounded-xl text-sm font-medium text-red-500 hover:bg-red-50 transition-all duration-150 text-left mt-1"
                 >
-                  <svg className="w-4 h-4 flex-shrink-0" fill="none" stroke="currentColor" strokeWidth={2} viewBox="0 0 24 24">
-                    <path strokeLinecap="round" strokeLinejoin="round" d="M17 16l4-4m0 0l-4-4m4 4H7m6 4v1a3 3 0 01-3 3H6a3 3 0 01-3-3V7a3 3 0 013-3h4a3 3 0 013 3v1" />
+                  <svg
+                    className="w-4 h-4 flex-shrink-0"
+                    fill="none"
+                    stroke="currentColor"
+                    strokeWidth={2}
+                    viewBox="0 0 24 24"
+                  >
+                    <path
+                      strokeLinecap="round"
+                      strokeLinejoin="round"
+                      d="M17 16l4-4m0 0l-4-4m4 4H7m6 4v1a3 3 0 01-3 3H6a3 3 0 01-3-3V7a3 3 0 013-3h4a3 3 0 013 3v1"
+                    />
                   </svg>
                   Logout
                 </button>
@@ -280,7 +388,10 @@ function Navbar() {
             ) : (
               <div className="px-1 py-1">
                 <button
-                  onClick={() => { navigate("/login"); setShowMenu(false); }}
+                  onClick={() => {
+                    navigate("/login");
+                    setShowMenu(false);
+                  }}
                   className="w-full bg-[#F3752B] text-white py-3 rounded-xl font-medium text-sm hover:bg-[#e06520] transition-colors duration-150"
                 >
                   Login / Create Account
@@ -288,7 +399,6 @@ function Navbar() {
               </div>
             )}
           </div>
-
         </div>
       </div>
     </div>

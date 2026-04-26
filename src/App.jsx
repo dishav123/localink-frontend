@@ -1,5 +1,5 @@
 import { Route, Routes, useLocation } from "react-router";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import Home from "./pages/Home";
 import ServiceProviders from "./pages/ServiceProviders";
 import Contact from "./pages/Contact";
@@ -18,6 +18,7 @@ import ProviderLogin from "./AuthPages/ProvidersLogin";
 import OtpPage from "./AuthPages/OtpPage";
 import ServiceProviderWizard from "./components/ServiceProviderWizardComponents/ServiceProviderWizard";
 import { ToastContainer, toast } from "react-toastify";
+import  ScrollToTop  from "./components/MiniComponents/ScrollToTop";
 
 export default function App() {
   const location = useLocation();
@@ -35,8 +36,10 @@ export default function App() {
   return (
     <div className="mx-5 sm:mx-[8%]">
       {!hideLayout && (
+        
         <Navbar loading={loading} />
       )}
+      <ScrollToTop /> 
       <ToastContainer />
       <Routes>
         <Route path="/" element={<Home />} />
