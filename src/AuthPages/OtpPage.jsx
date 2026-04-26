@@ -151,7 +151,10 @@ function OtpPage() {
                 key={index}
                 ref={(el) => (inputRefs.current[index] = el)}
                 type="text"
+                inputMode="numeric"      // ← keeps numeric keyboard on mobile
+                pattern="[0-9]*"  
                 maxLength={1}
+                autoComplete="one-time-code" //on iOS/Android autofills OTP from SMS
                 value={digit}
                 onChange={(e) => handleChange(index, e.target.value)}
                 onKeyDown={(e) => handleKeyDown(index, e)}
